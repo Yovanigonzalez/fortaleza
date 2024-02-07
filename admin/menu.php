@@ -139,21 +139,21 @@ if (isset($_SESSION['nombre_usuario'])) {
         <li class="nav-item has-treeview">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-user"></i> <!-- Cambiado a un ícono de usuario -->
-    <p>Productos<i class="fas fa-angle-left right"></i></p>
+    <p>Menú<i class="fas fa-angle-left right"></i></p>
   </a>
 
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="a_usuario.php" class="nav-link">
+      <a href="a_menu.php" class="nav-link">
         <i class="fas fa-user-plus nav-icon"></i> <!-- Cambiado a un ícono de agregar usuario -->
-        <p>Agregar Productos</p>
+        <p>Agregar Menú</p>
       </a>
     </li>
     
     <li class="nav-item">
       <a href="crud_usuario.php" class="nav-link">
         <i class="fas fa-cogs nav-icon"></i> <!-- Cambiado a un ícono de configuración o acciones -->
-        <p>Acciones Productos</p>
+        <p>Acciones Menú</p>
       </a>
     </li>
   </ul>
