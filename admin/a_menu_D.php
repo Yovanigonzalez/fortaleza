@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
                         
-                        <form action="procesar_menu.php" method="post" enctype="multipart/form-data">
+                        <form action="procesar_menu_d.php" method="post" enctype="multipart/form-data">
                         <?php
                             // a_menu.php
 
@@ -36,15 +36,7 @@
                             ?>
 
 
-                            <h4 class="text-center mb-4">Agregar Menú Pollo</h4>
-
-                            <div class="form-group">
-                                <label for="imagen">Imagen:</label>
-                                <input type="file" class="form-control-file" id="imagen" name="imagen" accept="image/*">
-                            </div>
-
-
-                            <!-- ... (código existente) ... -->
+                            <h4 class="text-center mb-4">Agregar Menú Digital</h4>
 
                             <div class="form-group">
                                 <label for="subtitulo">Titulo:</label>
@@ -52,38 +44,6 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="descripcion">Descripción:</label>
-                                <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="precio1">Precio 1:</label>
-                                <input type="number" class="form-control" id="precio1" name="precio1" step="0.01" placeholder="Ingrese el Precio 1">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="precio2">Precio 2:</label>
-                                <input type="number" class="form-control" id="precio2" name="precio2" step="0.01" placeholder="Ingrese el Precio 2">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="precio3">Precio 3:</label>
-                                <input type="number" class="form-control" id="precio3" name="precio3" step="0.01" placeholder="Ingrese el Precio 3">
-                            </div>
-
-                            <!-- ... (código existente) ... -->
-
-                            <!-- ... (código existente) ... -->
-
-                            <div class="form-group">
-                                <label for="categoria">Categoría:</label>
-                                <select class="form-control" id="categoria" name="categoria">
-                                    <option value="pollo">Pollo</option>
-                                    <!-- Agrega más opciones según sea necesario -->
-                                </select>
-                            </div>
 
                             <!-- ... (código existente) ... -->
 

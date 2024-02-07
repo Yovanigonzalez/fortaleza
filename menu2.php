@@ -11,8 +11,8 @@
     }
 
     .menu-column {
-      width: 287px; /* Ajusta el ancho del menú según tus necesidades */
-      height: 542px;
+      width: 300px; /* Ajusta el ancho del menú según tus necesidades */
+      height: 730px;
       flex-shrink: 0;
       border-radius: 0px 145px 145px 0px;
       background: #911D1D;
@@ -139,14 +139,34 @@
 <div class="menu-container">
   <div class="menu-column">
     <div id="menu-title">MENÚ</div>
-    <a class="menu-item" >Paquetes Clasicos</a>
-    <a class="menu-item" >Combos</a>
-    <a class="menu-item" >Entradas</a>
-    <a class="menu-item" >Postres / Tortas</a>
-    <a class="menu-item" >Menú Infantil</a>
-    <a class="menu-item" >Bebidas</a>
-  </div>
 
+    <?php
+      // Conexión a la base de datos (reemplaza con tus propios detalles)
+      include 'config/conexion.php';
+
+      // Verificación de la conexión
+      if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+      }
+
+      // Consulta para obtener los datos de la tabla 'digital'
+      $sql = "SELECT id, subtitulo FROM digital";
+      $result = $conn->query($sql);
+
+      // Generar enlaces del menú dinámicamente
+      if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+          echo '<a class="menu-item" href="categoria.php?id=' . $row["id"] . '">' . $row["subtitulo"] . '</a>';
+        }
+      } else {
+        echo "0 resultados";
+      }
+
+      // Cerrar la conexión a la base de datos
+      $conn->close();
+    ?>
+  </div>
+</div>
 
 </body>
 </html>

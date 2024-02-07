@@ -50,7 +50,6 @@ include '../config/conexion.php';
                                 <table class='table table-bordered'>
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>Nombre de Usuario</th>
                                             <th>Teléfono</th>
                                             <th>Correo</th>
@@ -62,7 +61,6 @@ include '../config/conexion.php';
 
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>
-                                    <td>{$row['id']}</td>
                                     <td>{$row['nombre_usuario']}</td>
                                     <td>{$row['telefono']}</td>
                                     <td>{$row['correo']}</td>

@@ -1,113 +1,76 @@
-<?php include 'nav/menu.php'; ?>
 
+<?php include 'seccion1.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/comida.css">
+
     <title>Pollos La Fortaleza Chicken | Menú</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
 
-        body {
-  background-color: #f4f4f4;
-}
-
-        #menu-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-
-        .menu-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 10px;
-            width: 300px;
-        }
-
-        .menu-item img {
-            width: 100%;
-            height: auto;
-        }
-
-        .menu-item-content {
-            padding: 15px;
-        }
-
-        .menu-item h3 {
-            margin-top: 0;
-        }
-
-        .menu-item p {
-            color: #777;
-        }
-    </style>
 </head>
 <body>
+<!-- Agregar formulario de búsqueda -->
+<form method="GET" action="">
+    <label for="busqueda">Buscar:</label>
+    <input type="text" id="busqueda" name="busqueda">
+    <input type="submit" value="Buscar">
+</form>
+
 
     <h1 align="center">Menú de Comida</h1>
 
     <div id="menu-container">
 
-        <div class="menu-item" onclick="showDetails(1)">
-            <img src="https://via.placeholder.com/300" alt="Pollo Asado">
-            <div class="menu-item-content">
-                <h3>Pollo Asado</h3>
-                <p>
-                    (Incluyen: Arroz o Espagueti + Tortillas o Totopos + Salsa)
-                    <ul>
-                        <li>1/2 x $95.00</li>
-                        <li>1 x $175.00</li>
-                        <li>2 x $330.00</li>
-                    </ul>
-                </p>
-            </div>
-        </div>
+        <?php
+                // Establecer conexión a la base de datos
+        include 'config/conexion.php';
 
-        <div class="menu-item" onclick="showDetails(2)">
-            <img src="https://via.placeholder.com/300" alt="Pollo Rostizado">
-            <div class="menu-item-content">
-                <h3>Pollo Rostizado</h3>
-                <p>
-                    (Incluyen: Arroz o Espagueti + Tortillas o Totopos + Salsa)
-                    <ul>
-                        <li>1/2 x $95.00</li>
-                        <li>1 x $175.00</li>
-                        <li>2 x $330.00</li>
-                    </ul>
-                </p>
-            </div>
-        </div>
+        // Verificar la conexión
+        if ($conn->connect_error) {
+            die("Conexión fallida: " . $conn->connect_error);
+        }
 
-        <div class="menu-item" onclick="showDetails(3)">
-            <img src="https://via.placeholder.com/300" alt="Pollo Barbacoa">
-            <div class="menu-item-content">
-                <h3>Pollo Barbacoa</h3>
-                <p>
-                    (Incluyen: Arroz o Espagueti + Tortillas o Totopos + Salsa)
-                    <ul>
-                        <li>1/2 x $95.00</li>
-                        <li>1 x $175.00</li>
-                        <li>2 x $330.00</li>
-                    </ul>
-                </p>
-            </div>
-        </div>
+        // Query para obtener datos
+        $query = "SELECT subtitulo, descripcion, precio1, precio2, precio3, categoria, imagen FROM menu";
+
+        // Obtener el valor de búsqueda del formulario
+$busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
+
+// Modificar la consulta SQL para incluir el filtro de búsqueda
+$query = "SELECT subtitulo, descripcion, precio1, precio2, precio3, categoria, imagen FROM menu 
+          WHERE subtitulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%'";
+
+
+        // Ejecutar la consulta
+        $result = $conn->query($query);
+
+        // Mostrar los resultados
+        while ($item = $result->fetch_assoc()) {
+            // La ruta de la imagen es asumida en la carpeta 'view'
+            
+            $imagenRuta = "view/" . $item['imagen'];
+
+            echo "<div class='menu-item' onclick='showDetails()'>";
+            echo "<img src='$imagenRuta' alt='{$item['subtitulo']}'>";
+            echo "<div class='menu-item-content'>";
+            echo "<h3 align='center'>{$item['subtitulo']}</h3>";
+            echo "<p>{$item['descripcion']}</p>";
+            echo "<ul>";
+            echo "<li>1/2 pollo x {$item['precio1']}</li>";
+            echo "<li>1 pollo x {$item['precio2']}</li>";
+            echo "<li>2 pollos x {$item['precio3']}</li>";
+            echo "</ul>";
+            echo "</div>";
+            echo "</div>";
+        }
+
+        // Cerrar la conexión a la base de datos
+        $conn->close();
+        ?>
 
     </div>
-
-    <script>
-        function showDetails(menuItemId) {
-            alert("Detalles del Plato " + menuItemId);
-        }
-    </script>
 
 </body>
 </html>

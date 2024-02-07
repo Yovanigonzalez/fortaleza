@@ -143,6 +143,14 @@ if (isset($_SESSION['nombre_usuario'])) {
   </a>
 
   <ul class="nav nav-treeview">
+    
+  <li class="nav-item">
+      <a href="a_menu_D.php" class="nav-link">
+        <i class="fas fa-user-plus nav-icon"></i> <!-- Cambiado a un ícono de agregar usuario -->
+        <p>Agregar Menú Digital</p>
+      </a>
+    </li>
+
     <li class="nav-item">
       <a href="a_menu.php" class="nav-link">
         <i class="fas fa-user-plus nav-icon"></i> <!-- Cambiado a un ícono de agregar usuario -->
