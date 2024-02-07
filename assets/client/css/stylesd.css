@@ -1,0 +1,79 @@
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 5px solid #e62788;
+    width: 80%; /* Utiliza un porcentaje en lugar de un valor fijo */
+    text-align: center;
+    border-radius: 10px;
+}
+
+.close {
+    color: #e62788;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #e62788;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo de Formulario */
+form {
+    display: grid;
+    grid-gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* Add styles for the "Pagar" button */
+.boton-p {
+    background-color: #e62788;
+    color: white;
+    padding: 10px 0; /* Ajusta el padding para un botón más pequeño */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px; /* Ajusta el tamaño de fuente */
+    margin-top: 10px; /* Añade margen para el espaciado */
+    width: 40%;
+    display: block; /* Hace que el botón sea un elemento de bloque */
+    margin-left: auto; /* Centra el botón horizontalmente */
+    margin-right: auto;
+}
+
+.boton-p:hover {
+    background-color: #e62788;
+}
+
+/* Media query para pantallas más pequeñas */
+@media screen and (max-width: 600px) {
+    .modal-content {
+        width: 90%; /* Ajusta el ancho para pantallas más pequeñas */
+    }
+
+    /* Otros estilos específicos para pantallas más pequeñas si es necesario */
+}
