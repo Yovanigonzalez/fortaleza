@@ -93,7 +93,7 @@ if (isset($_SESSION['nombre_usuario'])) {
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Logo -->
   <a href="inicio.php" class="brand-link">
-    <span class="brand-text font-weight-light">Panel del Administrador</span>
+    <span class="brand-text font-weight-light"><h4 align="center">Punto de Venta</h4></span>
     <div class="center-container">
     <div class="rounded-circle-container">
         <img src="../ico/logo.png" class="img-fluid" alt="Login Image">
@@ -107,59 +107,15 @@ if (isset($_SESSION['nombre_usuario'])) {
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
 
-        
-        <!-- Elemento de menú Productos con submenús Extra -->
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-images"></i>
-            <p>Venta <i class="fas fa-angle-left right"></i></p>
-          </a>
+      <li class="nav-item">
+    <a href="venta.php" class="nav-link">
+        <i class="nav-icon fas fa-shopping-cart"></i>
+        <p>Venta</p>
+    </a>
+</li>
 
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="banner.php" class="nav-link">
-                <i class="fas fa-plus nav-icon"></i>
-                <p>Agregar Venta Pedido</p>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="crud_banner.php" class="nav-link">
-                <i class="fas fa-plus nav-icon"></i>
-                <p>Agregar Venta Mesa</p>
-              </a>
-            </li>
-          </ul>
-        </li>
         
 
-                <!-- Elemento de menú Productos con submenús Extra -->
-                <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-images"></i>
-            <p>Venta <i class="fas fa-angle-left right"></i></p>
-          </a>
-
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="banner.php" class="nav-link">
-                <i class="fas fa-plus nav-icon"></i>
-                <p>Venta </p>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="crud_banner.php" class="nav-link">
-                <i class="fas fa-plus nav-icon"></i>
-                <p>Agregar Venta Mesa</p>
-              </a>
-            </li>
-          </ul>
-        </li>
 
 
         

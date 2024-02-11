@@ -73,17 +73,40 @@
                                 <input type="number" class="form-control" id="precio3" name="precio3" step="0.01" placeholder="Ingrese el Precio 3">
                             </div>
 
-                            <!-- ... (código existente) ... -->
-
-                            <!-- ... (código existente) ... -->
 
                             <div class="form-group">
                                 <label for="categoria">Categoría:</label>
                                 <select class="form-control" id="categoria" name="categoria">
-                                    <option value="pollo">Pollo</option>
+                                    <option value="Pollo">Pollo</option>
+                                    <option value="Pollo Combos">Pollos Combos</option>
+                                    <option value="Alitas">Alitas</option>
+                                    <option value="Tenders">Tenders</option>
+                                    <option value="Crepas">Crepas</option>
+                                    <option value="Hamburgesas">Hamburgesas</option>
+                                    <option value="Costillas">Costillas</option>
+                                    <option value="Guarniciones">Guarniciones</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Mixiotes">Mixiotes</option>
+
+
+
                                     <!-- Agrega más opciones según sea necesario -->
                                 </select>
                             </div>
+
+
+                            <!-- ... (existing form elements) ... -->
+
+<div class="form-group">
+    <label for="estatus">Estatus:</label>
+    <select class="form-control" id="estatus" name="estatus">
+        <option value="activo">Activo</option>
+        <option value="agotado">Agotado</option>
+    </select>
+</div>
+
+<!-- ... (existing form elements) ... -->
+
 
                             <!-- ... (código existente) ... -->
 

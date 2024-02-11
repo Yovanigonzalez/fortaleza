@@ -1,0 +1,64 @@
+        /* Estilos para el formulario de filtro */
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        label {
+            margin-right: 10px;
+        }
+        
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #911D1D;
+            border-radius: 50px;
+        }
+        
+        input[type="submit"] {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        
+        input[type="submit"] {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #911D1D;
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
+        
+        /* Media query para pantallas más pequeñas */
+        @media screen and (max-width: 600px) {
+            form {
+                /* Estilos específicos para pantallas más pequeñas */
+                margin-bottom: 10px;
+            }
+        
+            label {
+                /* Estilos específicos para pantallas más pequeñas */
+                margin-right: 5px;
+            }
+        
+            select {
+                /* Estilos específicos para pantallas más pequeñas */
+                padding: 6px;
+                font-size: 14px;
+                border-radius: 30px;
+            }
+        
+            input[type="submit"] {
+                /* Estilos específicos para pantallas más pequeñas */
+                padding: 6px 12px;
+                font-size: 14px;
+                border-radius: 30px;
+            }
+        }
+        /* Estilos adicionales según sea necesario */
+        

@@ -144,12 +144,12 @@ if (isset($_SESSION['nombre_usuario'])) {
 
   <ul class="nav nav-treeview">
     
-  <li class="nav-item">
+  <!--<li class="nav-item">
       <a href="a_menu_D.php" class="nav-link">
-        <i class="fas fa-user-plus nav-icon"></i> <!-- Cambiado a un ícono de agregar usuario -->
+        <i class="fas fa-user-plus nav-icon"></i> <!-- Cambiado a un ícono de agregar usuario
         <p>Agregar Menú Digital</p>
       </a>
-    </li>
+    </li>-->
 
     <li class="nav-item">
       <a href="a_menu.php" class="nav-link">
@@ -159,13 +159,96 @@ if (isset($_SESSION['nombre_usuario'])) {
     </li>
     
     <li class="nav-item">
-      <a href="crud_usuario.php" class="nav-link">
+      <a href="crud_menu.php" class="nav-link">
         <i class="fas fa-cogs nav-icon"></i> <!-- Cambiado a un ícono de configuración o acciones -->
         <p>Acciones Menú</p>
       </a>
     </li>
   </ul>
 </li>
+
+
+        <!-- Agregar Productos-->
+
+        <li class="nav-item has-treeview">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-utensils"></i>
+    <p>Categorías <i class="fas fa-angle-left right"></i></p>
+  </a>
+
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="a_pollo.php" class="nav-link">
+        <i class="fas fa-drumstick-bite nav-icon"></i>
+        <p>Pollos</p>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a href="a_pollo_combos.php" class="nav-link">
+        <i class="fas fa-hamburger nav-icon"></i>
+        <p>Pollo Combos</p>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a href="a_alitas.php" class="nav-link">
+        <i class="fas fa-drumstick-bite nav-icon"></i>
+        <p>Alitas</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_tenders.php" class="nav-link">
+        <i class="fas fa-fish nav-icon"></i>
+        <p>Tenders</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_crepas.php" class="nav-link">
+        <i class="fas fa-utensil-spoon nav-icon"></i>
+        <p>Crepas</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_hamburgesas.php" class="nav-link">
+        <i class="fas fa-hamburger nav-icon"></i>
+        <p>Hamburguesas</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_costillas.php" class="nav-link">
+        <i class="fas fa-bone nav-icon"></i>
+        <p>Costillas</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_guarniciones.php" class="nav-link">
+        <i class="fas fa-utensils nav-icon"></i>
+        <p>Guarniciones</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_bebidas.php" class="nav-link">
+        <i class="fas fa-cocktail nav-icon"></i>
+        <p>Bebidas</p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="a_mixiotes.php" class="nav-link">
+        <i class="fas fa-pepper-hot nav-icon"></i>
+        <p>Mixiotes</p>
+      </a>
+    </li>
+  </ul>
+</li>
+
 
 
 <!-- Inventario -->

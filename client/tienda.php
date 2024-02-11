@@ -112,13 +112,15 @@
         <h1>CRUNCH CHICKEN<br> TEHUACAN </h1>
         <br>
         <h4>Queridos amantes del Crunch Chicken en Tehuacán,
-            ¡Estamos emocionados de ofrecerles una nueva opción para disfrutar de nuestro delicioso pollo crujiente! Ahora, pueden elegir entre recoger su pedido directamente en nuestro establecimiento o recibirlo cómodamente en la puerta de su hogar.</h4>
+            Si realizan pagos o transferencias, les pedimos amablemente subir una foto del comprobante. De esta manera, podremos enviarles su delicioso pollo crujiente. En caso de que prefieran recogerlo personalmente, les solicitamos traer su comprobante al establecimiento.
+        </h4>
     </div>
 
     <div class="circle-container">
         <img class="imagen" src="../ico/logo.png" alt="Logo de Distribuidora">
     </div>
 </div>
+
 
 <!-- SVG sin estilos en línea -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 965 125" fill="none">
@@ -127,7 +129,6 @@
 
 <?php include '../cosa.php'; ?>
 
-<?php include '../menu2.php'; ?>
-
+<?php include 'botones.php'; ?>
 </body>
 </html>

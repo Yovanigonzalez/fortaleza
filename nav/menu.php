@@ -32,7 +32,7 @@ nav a:hover {
       <a href="contacto.php">Contacto</a>
       <!-- <a href="acerca.php">Acerca de</a> -->
       <a href="menu.php">Menú</a>
-      <a href="tienda.php">Tienda</a>
+      <!--<a href="tienda.php">Tienda</a>-->
       <!--<a href="job.php">Bolsa de trabajo</a>-->
       <a href="login.php">
         <img src="img/usuario.png" alt="Login">

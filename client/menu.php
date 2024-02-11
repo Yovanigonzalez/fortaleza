@@ -41,6 +41,9 @@
     
     <nav>
       <a href="tienda.php">Menú</a>
+
+      <a href="tienda.php">Carrito</a>
+
       <!--<a href="job.php">Bolsa de trabajo</a>-->
       <a href="login.php">
         <?php
