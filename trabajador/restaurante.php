@@ -2,6 +2,7 @@
 
 <?php
 
+// Conexión a la base de datos (reemplaza con tus propios valores)
 include '../config/conexion.php';
 
 // Verificar la conexión
@@ -20,6 +21,7 @@ $resultProductos = $conn->query($sqlProductos);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Logo -->
     <link rel="shortcut icon" type="image/x-icon" href="../log/log.png">
@@ -40,8 +42,33 @@ $resultProductos = $conn->query($sqlProductos);
                 <br>
                 <div class="container-fluid">
                     <div class="row">
+
+                                            <!-- Columna del Ticket de Compra -->
+                                            <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Ticket de Compra</h3>
+                                </div>
+
+                                <div class="card-body">
+
+                                <section>
+                                        <h2>Agregar Extra</h2>
+                                        <!-- Campo de entrada para la descripción del extra -->
+                                        <input type="text" id="extraDescripcion" class="form-control" placeholder="Descripción del extra">
+                                        <!-- Campo de entrada numérica para el precio del extra -->
+                                        <br>
+                                        <input type="number" id="extraPrecio" class="form-control" placeholder="Precio del extra">
+                                        <!-- Botón para agregar el extra al carrito -->
+                                        <br>
+                                        <button class="btn btn-sm btn-primary" onclick="agregarExtraAlCarrito()">Agregar Extra</button>
+                                    </section>                            </div>
+                            </div>
+                        </div>
+
+
                         <!-- Columna del Punto de Venta -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Punto de Venta</h3>
@@ -66,7 +93,6 @@ $resultProductos = $conn->query($sqlProductos);
                                             ?>
                                         </ul>
                                     </section>
-
 
                                     <br>
                                     <section>
@@ -136,7 +162,36 @@ $resultProductos = $conn->query($sqlProductos);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="v.js"></script>
 
+    <script>
+        function agregarExtraAlCarrito() {
+    var descripcion = document.getElementById('extraDescripcion').value;
+    var precio = parseFloat(document.getElementById('extraPrecio').value);
+
+    if (descripcion !== "" && !isNaN(precio) && precio > 0) {
+        // Crea un nuevo elemento de lista para el extra
+        var carrito = document.getElementById('carrito');
+        var nuevoItem = document.createElement('li');
+        nuevoItem.textContent = descripcion + ' - Precio: $' + precio.toFixed(2);
+
+        // Calcula el total y actualiza la cantidad
+        var totalElement = document.getElementById('total');
+        var total = parseFloat(totalElement.textContent) + precio;
+        totalElement.textContent = total.toFixed(2);
+
+        // Agrega el elemento al carrito
+        carrito.appendChild(nuevoItem);
+
+        // Limpia los campos de entrada
+        document.getElementById('extraDescripcion').value = '';
+        document.getElementById('extraPrecio').value = '';
+    } else {
+        alert('Ingresa una descripción válida y un precio mayor que cero para el extra.');
+    }
+}
+
+    </script>
 <!-- Agrega este script al final de tu página HTML, antes de cerrar el body -->
 <script>
     // Función para obtener la descripción de la venta a partir de los elementos del carrito
@@ -284,47 +339,38 @@ $resultProductos = $conn->query($sqlProductos);
         }
 
 
-function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
-    console.log('Ejecutando agregarAlCarrito');
-    console.log('ID:', id);
-    console.log('Descripción:', descripcion);
-    console.log('Precio:', precio);
-    console.log('Cantidad:', cantidad);
-    console.log('Categoría:', categoria);
+        function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
+        // Realiza la actualización del stock en la base de datos
+        actualizarStockEnBaseDeDatos(categoria, cantidad)
+            .then(() => {
+                // El stock se ha actualizado correctamente en la base de datos.
 
-    // Realiza la actualización del stock en la base de datos
-    actualizarStockEnBaseDeDatos(categoria, cantidad)
-        .then(() => {
-            // El stock se ha actualizado correctamente en la base de datos.
-            console.log('Stock actualizado correctamente en la base de datos.');
+                // Crea un nuevo elemento de lista para el carrito
+                var carrito = document.getElementById('carrito');
+                var nuevoItem = document.createElement('li');
+                nuevoItem.textContent = descripcion + ' - Precio: $' + precio;
 
-            // Crea un nuevo elemento de lista para el carrito
-            var carrito = document.getElementById('carrito');
-            var nuevoItem = document.createElement('li');
-            nuevoItem.textContent = descripcion + ' - Precio: $' + precio;
+                // Calcula el total y actualiza la cantidad
+                var totalElement = document.getElementById('total');
+                var total = parseFloat(totalElement.textContent) + precio;
+                totalElement.textContent = total.toFixed(2);
 
-            // Calcula el total y actualiza la cantidad
-            var totalElement = document.getElementById('total');
-            var total = parseFloat(totalElement.textContent) + precio;
-            totalElement.textContent = total.toFixed(2);
+                // Agrega el elemento al carrito
+                carrito.appendChild(nuevoItem);
 
-            // Agrega el elemento al carrito
-            carrito.appendChild(nuevoItem);
+                // Limpia el campo de búsqueda
+                document.getElementById('searchProductos').value = '';
 
-            // Limpia el campo de búsqueda
-            document.getElementById('searchProductos').value = '';
-
-            // Oculta la lista de resultados
-            var ul = document.getElementById('productosList');
-            ul.style.display = 'none';
-        })
-        .catch((error) => {
-            // Hubo un error al actualizar el stock en la base de datos.
-            // Puedes manejar el error aquí.
-            console.error('Error al actualizar el stock en la base de datos: ' + error.message);
-        });
-}
-
+                // Oculta la lista de resultados
+                var ul = document.getElementById('productosList');
+                ul.style.display = 'none';
+            })
+            .catch((error) => {
+                // Hubo un error al actualizar el stock en la base de datos.
+                // Puedes manejar el error aquí.
+                console.error('Error al actualizar el stock en la base de datos: ' + error.message);
+            });
+    }
 
         function actualizarStockEnBaseDeDatos(categoria, cantidad) {
             return new Promise((resolve, reject) => {
@@ -393,7 +439,7 @@ function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
 
             // Construir el contenido del ticket
             var ticketContent = '<div class="text-center">';
-            ticketContent += '<img id="imagenTicket" src="../svg/log.svg" alt="Imagen del ticket" style="display: block; margin: 0 auto; width: 180px; height: auto; margin-top: 10px;">';
+            ticketContent += '<img id="imagenTicket" src="../tic/log.svg" alt="Imagen del ticket" style="display: block; margin: 0 auto; width: 100px; height: auto; margin-top: 10px;">';
 
             // Agregar la dirección y el número de teléfono con estilo para limitar el ancho
             ticketContent += '<p><strong>Número de Teléfono:</strong> 238 195 4481</p>';
@@ -441,30 +487,24 @@ function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
 
         
 
-function imprimirTicket() {
-    // Obtener la fecha y hora actual
-    var fechaHora = new Date();
-    var fechaHoraFormato = fechaHora.toLocaleString();
+        function imprimirTicket() {
+            // Obtener el contenido del ticket
+            var ticketContent = document.getElementById('ticketContent').innerHTML;
 
-    // Obtener el contenido del ticket
-    var ticketContent = document.getElementById('ticketContent').innerHTML;
+            // Crear una ventana emergente para imprimir el contenido del ticket
+            var popupWin = window.open('', '_blank', 'width=600,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><title>Ticket de Compra</title></head><body>' + ticketContent + '</body></html>');
+            popupWin.document.close();
 
-    // Crear una ventana emergente para imprimir el contenido del ticket con fecha y hora
-    var popupWin = window.open('', '_blank', 'width=600,height=600');
-    popupWin.document.open();
-    popupWin.document.write('<html><head><title>Ticket de Compra</title></head><body>');
-    popupWin.document.write('<p>' + fechaHoraFormato + '</p>');
-    popupWin.document.write(ticketContent);
-    popupWin.document.write('</body></html>');
-    popupWin.document.close();
+            // Imprimir el contenido del ticket
+            popupWin.print();
+            popupWin.close();
+        }
 
-    // Imprimir el contenido del ticket
-    popupWin.print();
-    popupWin.close();
-}
 
-// Cerrar la conexión a la base de datos
-<?php $conn->close(); ?>
+        // Cerrar la conexión a la base de datos
+        <?php $conn->close(); ?>
     </script>
 </body>
 </html>

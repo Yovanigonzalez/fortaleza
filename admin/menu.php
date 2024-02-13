@@ -173,79 +173,32 @@ if (isset($_SESSION['nombre_usuario'])) {
         <li class="nav-item has-treeview">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-utensils"></i>
-    <p>Categorías <i class="fas fa-angle-left right"></i></p>
+    <p>Agregar <i class="fas fa-angle-left right"></i></p>
   </a>
 
   <ul class="nav nav-treeview">
     <li class="nav-item">
       <a href="a_pollo.php" class="nav-link">
         <i class="fas fa-drumstick-bite nav-icon"></i>
-        <p>Pollos</p>
+        <p>Menu (comida)</p>
       </a>
     </li>
-    
+
     <li class="nav-item">
-      <a href="a_pollo_combos.php" class="nav-link">
-        <i class="fas fa-hamburger nav-icon"></i>
-        <p>Pollo Combos</p>
-      </a>
-    </li>
-    
-    <li class="nav-item">
-      <a href="a_alitas.php" class="nav-link">
+      <a href="#" class="nav-link">
         <i class="fas fa-drumstick-bite nav-icon"></i>
-        <p>Alitas</p>
+        <p>Acciones (comida)</p>
       </a>
     </li>
+    
 
     <li class="nav-item">
-      <a href="a_tenders.php" class="nav-link">
-        <i class="fas fa-fish nav-icon"></i>
-        <p>Tenders</p>
+      <a href="entradas.php" class="nav-link">
+        <i class="fas fa-drumstick-bite nav-icon"></i>
+        <p>Entradas</p>
       </a>
     </li>
-
-    <li class="nav-item">
-      <a href="a_crepas.php" class="nav-link">
-        <i class="fas fa-utensil-spoon nav-icon"></i>
-        <p>Crepas</p>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a href="a_hamburgesas.php" class="nav-link">
-        <i class="fas fa-hamburger nav-icon"></i>
-        <p>Hamburguesas</p>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a href="a_costillas.php" class="nav-link">
-        <i class="fas fa-bone nav-icon"></i>
-        <p>Costillas</p>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a href="a_guarniciones.php" class="nav-link">
-        <i class="fas fa-utensils nav-icon"></i>
-        <p>Guarniciones</p>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a href="a_bebidas.php" class="nav-link">
-        <i class="fas fa-cocktail nav-icon"></i>
-        <p>Bebidas</p>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a href="a_mixiotes.php" class="nav-link">
-        <i class="fas fa-pepper-hot nav-icon"></i>
-        <p>Mixiotes</p>
-      </a>
-    </li>
+ 
   </ul>
 </li>
 

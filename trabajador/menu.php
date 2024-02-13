@@ -114,9 +114,19 @@ if (isset($_SESSION['nombre_usuario'])) {
     </a>
 </li>
 
-        
+<li class="nav-item">
+        <a href="restaurante.php" class="nav-link">
+            <i class="nav-icon fas fa-door-closed"></i>
+            <p>Restaurante</p>
+        </a>
+        </li>  
 
-
+<li class="nav-item">
+        <a href="caja.php" class="nav-link">
+            <i class="nav-icon fas fa-door-closed"></i>
+            <p>Caja</p>
+        </a>
+        </li>
 
         
         <li class="nav-item">

@@ -139,52 +139,30 @@ if (isset($_SESSION['nombre_usuario'])) {
 <!-- Sección Tienda -->
 <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-shopping-cart"></i> <!-- Cambié el icono aquí -->
-        <p>Tienda <i class="fas fa-angle-left right"></i></p>
+        <i class="nav-icon fas fa-box"></i> <!-- Changed the icon here -->
+        <p>Inventario <i class="fas fa-angle-left right"></i></p>
     </a>
-
-
-        <!-- Submenús de Tienda -->
-        <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="a_tienda.php" class="nav-link">
-                <i class="fas fa-exchange-alt nav-icon"></i> <!-- Cambié el icono aquí -->
-                <p>Agregar productos a Menu</p>
-            </a>
-        </li>
-    </ul>
-
-            <!-- Submenús de Tienda -->
-            <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="tienda.php" class="nav-link">
-            <i class="fas fa-database nav-icon"></i> <!-- Cambié el icono aquí -->
-                <p>Acciones a Menu</p>
-            </a>
-        </li>
-    </ul>
 
     <!-- Submenús de Tienda -->
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="tienda.php" class="nav-link">
-                <i class="fas fa-exchange-alt nav-icon"></i> <!-- Cambié el icono aquí -->
-                <p>Agregar productos Tienda</p>
+            <a href="inventario.php" class="nav-link">
+                <i class="fas fa-exchange-alt nav-icon"></i>
+                <p>Inventario editable</p>
             </a>
         </li>
     </ul>
 
-
-
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="crud_tienda.php" class="nav-link">
-                <i class="fas fa-database nav-icon"></i> <!-- Cambié el icono aquí -->
-                <p>Acciones Tienda</p>
+            <a href="tienda.php" class="nav-link">
+                <i class="fas fa-exchange-alt nav-icon"></i>
+                <p>Descargar Inventario</p>
             </a>
         </li>
     </ul>
 </li>
+
 
 
 
