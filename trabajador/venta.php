@@ -103,7 +103,7 @@ $resultProductos = $conn->query($sqlProductos);
                                         <br>
                                         <br>
                                         <!-- Botón para realizar el pago e imprimir el ticket -->
-                                        <button class="btn btn-primary" onclick="registrarVenta()">Solo registrar venta</button>
+                                        <!--<button class="btn btn-primary" onclick="registrarVenta()">Solo registrar venta</button>-->
 
                                     </section>
                                     <!-- Fin del código del punto de venta -->
@@ -132,6 +132,7 @@ $resultProductos = $conn->query($sqlProductos);
             </section>
         </div>
     </div>
+    
     <!-- Agrega el enlace a jQuery y a Bootstrap.js si no lo has hecho ya -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -441,7 +442,7 @@ function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
 
         
 
-function imprimirTicket() {
+        function imprimirTicket() {
     // Obtener la fecha y hora actual
     var fechaHora = new Date();
     var fechaHoraFormato = fechaHora.toLocaleString();
@@ -452,7 +453,13 @@ function imprimirTicket() {
     // Crear una ventana emergente para imprimir el contenido del ticket con fecha y hora
     var popupWin = window.open('', '_blank', 'width=600,height=600');
     popupWin.document.open();
-    popupWin.document.write('<html><head><title>Ticket de Compra</title></head><body>');
+    popupWin.document.write('<html><head><title>Ticket de Compra</title>');
+    
+    // Estilos de tabla
+    popupWin.document.write('<style>table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }');
+    popupWin.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }</style>');
+    
+    popupWin.document.write('</head><body>');
     popupWin.document.write('<p>' + fechaHoraFormato + '</p>');
     popupWin.document.write(ticketContent);
     popupWin.document.write('</body></html>');
@@ -462,6 +469,7 @@ function imprimirTicket() {
     popupWin.print();
     popupWin.close();
 }
+
 
 // Cerrar la conexión a la base de datos
 <?php $conn->close(); ?>
