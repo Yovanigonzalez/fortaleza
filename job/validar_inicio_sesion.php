@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../admin/inicio.php");
                 exit();
             } elseif ($row['rol'] === 'job') {
-                header("Location: ../trabajador/inicio.php");
+                header("Location: ../trabajador/venta.php");
                 exit();
             } elseif ($row['rol'] === 'super') {
                 header("Location: ../super/inicio.php");

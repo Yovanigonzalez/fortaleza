@@ -1,7 +1,6 @@
 <?php include 'menu.php' ?>
 
 <?php
-
 include '../config/conexion.php';
 
 // Verificar la conexión
@@ -9,10 +8,26 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
+// Consulta SQL para obtener el último número de folio utilizado
+$sqlUltimoFolio = "SELECT MAX(numero_folio) AS ultimoFolio FROM ventas";
+$resultUltimoFolio = $conn->query($sqlUltimoFolio);
+
+if ($resultUltimoFolio->num_rows > 0) {
+    $rowUltimoFolio = $resultUltimoFolio->fetch_assoc();
+    $ultimoFolio = $rowUltimoFolio['ultimoFolio'];
+    // Incrementar el número de folio para la próxima venta
+    $numeroFolio = $ultimoFolio + 1;
+} else {
+    // Si no hay ventas anteriores, comenzar desde el folio 1
+    $numeroFolio = 1;
+}
+
 // Consulta SQL para obtener todos los productos de la tabla 'productos'
 $sqlProductos = "SELECT id, cantidad, descripcion, precio, categoria FROM producto";
 $resultProductos = $conn->query($sqlProductos);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -49,7 +64,7 @@ $resultProductos = $conn->query($sqlProductos);
                                 <div class="card-body">
                                     <!-- Código del punto de venta -->
                                     <section>
-                                        <h2>Productos</h2>
+                                        <h4>Buscar Productos</h4>
                                         <!-- Campo de búsqueda para productos de la tabla 'productos' -->
                                         <input type="text" id="searchProductos" class="form-control" onkeyup="searchProductos()" placeholder="Buscar productos...">
                                         <!-- Lista de productos de la tabla 'productos' (inicialmente oculta) -->
@@ -70,7 +85,8 @@ $resultProductos = $conn->query($sqlProductos);
 
                                     <br>
                                     <section>
-                                        <h2>Carrito de Compra</h2>
+                                        <h4>Carrito de Compra</h4>
+
                                         <!-- Mostrar productos agregados al carrito -->
                                         <ul id="carrito">
                                             <!-- Los elementos del carrito se agregarán aquí dinámicamente -->
@@ -121,6 +137,9 @@ $resultProductos = $conn->query($sqlProductos);
                                     <!-- Contenido del ticket de compra -->
                                     <pre id="ticketContent"></pre>
 
+                                    <!-- Número de folio -->
+                                    <input type="hidden" id="numeroFolio" value="<?php echo $numeroFolio; ?>">
+
                                     <!-- Button to perform the payment and print the ticket -->
                                     <button class="btn btn-primary" onclick="imprimirTicket()">Imprimir Ticket</button>
                                 </div>
@@ -166,12 +185,13 @@ $resultProductos = $conn->query($sqlProductos);
         return total;
     }
 
-    // Función para registrar la venta mediante una solicitud AJAX
-    function ventas() {
+// Función para registrar la venta mediante una solicitud AJAX
+function ventas() {
     // Obtener información relevante
     var descripcion = obtenerDescripcionVenta();
     var total = obtenerTotalVenta();
     var fechaHora = obtenerFechaHoraActual();
+    var numeroFolio = obtenerNumeroFolio(); // Nueva función para obtener el número de folio
 
     // Realizar una solicitud AJAX para guardar los datos de ventas en la base de datos
     $.ajax({
@@ -180,7 +200,8 @@ $resultProductos = $conn->query($sqlProductos);
         data: {
             descripcion: descripcion,
             total: total,
-            fechaHora: fechaHora
+            fechaHora: fechaHora,
+            numeroFolio: numeroFolio // Agregar el número de folio a los datos
         },
         success: function(response) {
             // Los datos de ventas se han registrado con éxito
@@ -191,6 +212,13 @@ $resultProductos = $conn->query($sqlProductos);
             alert('Error al registrar los datos de ventas: ' + error); // Mostrar el mensaje de error
         }
     });
+}
+
+// Nueva función para obtener el número de folio
+function obtenerNumeroFolio() {
+    // Puedes obtener el número de folio de algún elemento en tu página HTML
+    // o calcularlo de acuerdo a tu lógica específica
+    return <?php echo $numeroFolio; ?>; // Aquí obtienes el número de folio PHP y lo insertas en el script JavaScript
 }
 
 </script>
@@ -381,74 +409,90 @@ function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
         }
 
         function realizarPago() {
-            // Obtener información relevante
-            var carritoItems = document.getElementById('carrito').getElementsByTagName('li');
-            var metodoPago = document.getElementById('metodoPago').value;
-            var dineroRecibido = parseFloat(document.getElementById('dineroRecibido').value) || 0;
-            var total = parseFloat(document.getElementById('total').textContent);
+    // Obtener información relevante
+    var carritoItems = document.getElementById('carrito').getElementsByTagName('li');
+    var metodoPago = document.getElementById('metodoPago').value;
+    var dineroRecibido = parseFloat(document.getElementById('dineroRecibido').value) || 0;
+    var total = parseFloat(document.getElementById('total').textContent);
 
-            // Obtener la fecha y hora actual
-            var fechaHoraActual = new Date();
-            var fecha = fechaHoraActual.toLocaleDateString();
-            var hora = fechaHoraActual.toLocaleTimeString();
+    // Obtener la fecha y hora actual
+    var fechaHoraActual = new Date();
+    var fecha = fechaHoraActual.toLocaleDateString();
+    var hora = fechaHoraActual.toLocaleTimeString();
 
-            // Construir el contenido del ticket
-            var ticketContent = '<div class="text-center">';
-            ticketContent += '<img id="imagenTicket" src="../svg/log.svg" alt="Imagen del ticket" style="display: block; margin: 0 auto; width: 180px; height: auto; margin-top: 10px;">';
+    // Obtener el número de folio
+    var numeroFolio = document.getElementById('numeroFolio').value;
 
-            // Agregar la dirección y el número de teléfono con estilo para limitar el ancho
-            ticketContent += '<p><strong>Número de Teléfono:</strong> 238 195 4481</p>';
+    // Construir el contenido del ticket
+    var ticketContent = '<div class="text-center">';
+    ticketContent += '<img id="imagenTicket" src="../svg/log.svg" alt="Imagen del ticket" style="display: block; margin: 0 auto; width: 180px; height: auto; margin-top: 10px;">';
 
-            // Agregar la tabla de elementos del carrito al ticket
-            ticketContent += '<table class="table table-bordered">';
-            ticketContent += '<thead><tr><th>Descripción</th><th>Precio</th></tr></thead>';
-            ticketContent += '<tbody>';
+    // Agregar la dirección y el número de teléfono con estilo para limitar el ancho
+    ticketContent += '<p><strong>Ubicanos en:</strong>Calle Dr Manuel Pereyra Mejía 433, Ignacio Zaragoza, 75770 Tehuacán, Pue</p>';
+    ticketContent += '<p><strong>Teléfono:</strong> 238 127 4286</p>';
+    ticketContent += '<p><strong>WhatsApp:</strong> 238 289 7997</p>';
 
-            // Agregar los elementos del carrito al ticket con descripción y precio en filas separadas
-            for (var i = 0; i < carritoItems.length; i++) {
-                var itemText = carritoItems[i].textContent;
-                var descripcion = itemText.split(' - Precio: ')[0];
-                var precio = itemText.split(' - Precio: ')[1];
-                ticketContent += '<tr><td>' + descripcion + '</td><td>' + precio + '</td></tr>';
-            }
+    ticketContent += '<p align="center"><strong>Número de venta:</strong> ' + numeroFolio + '</p>';
+    ticketContent += '<p align="center"><strong>Fecha y Hora: <br> </strong> ' + fecha + ' ' + hora + '</p>';
+    ticketContent += '<br>';
 
-            ticketContent += '</tbody>';
-            ticketContent += '</table>';
-            
-            // Agregar información adicional al ticket dentro de la tabla
-            ticketContent += '<table class="table table-bordered">';
-            ticketContent += '<tbody>';
-            ticketContent += '<tr><td><strong>Método de Pago:</strong></td><td>' + metodoPago + '</td></tr>';
+    ticketContent += '<p align="center"><strong>Detalles de su compra:</strong></p>';
+    ticketContent += '<br>';
 
-            // Condición para ocultar "Dinero Recibido" y "Cambio" si se selecciona "Tarjeta"
-            if (metodoPago !== 'Tarjeta') {
-                ticketContent += '<tr><td><strong>Dinero Recibido:</strong></td><td>$' + dineroRecibido.toFixed(2) + '</td></tr>';
-                ticketContent += '<tr><td><strong>Cambio:</strong></td><td>$' + (dineroRecibido - total).toFixed(2) + '</td></tr>';
-            }
-            
-            ticketContent += '<tr><td><strong>Total:</strong></td><td>$' + total.toFixed(2) + '</td></tr>';
-            ticketContent += '</tbody>';
-            ticketContent += '</table>';
+    // Agregar la tabla de elementos del carrito al ticket
+    ticketContent += '<table class="table table-bordered">';
+    ticketContent += '<thead><tr><th>Descripción</th><th>Precio</th></tr></thead>';
+    ticketContent += '<tbody>';
 
-            // Mensaje de agradecimiento
-            ticketContent += '<p align="center">¡Gracias por tu preferencia!</p>';
+    // Agregar los elementos del carrito al ticket con descripción y precio en filas separadas
+    for (var i = 0; i < carritoItems.length; i++) {
+        var itemText = carritoItems[i].textContent;
+        var descripcion = itemText.split(' - Precio: ')[0];
+        var precio = itemText.split(' - Precio: ')[1];
+        ticketContent += '<tr><td>' + descripcion + '</td><td>' + precio + '</td></tr>';
+    }
 
-            // Cerrar el div principal
-            ticketContent += '</div>';
+    ticketContent += '</tbody>';
+    ticketContent += '</table>';
+    
+    // Agregar información adicional al ticket dentro de la tabla
+    ticketContent += '<table class="table table-bordered">';
+    ticketContent += '<tbody>';
+    ticketContent += '<tr><td><strong>Método de Pago:</strong></td><td>' + metodoPago + '</td></tr>';
 
-            // Mostrar el contenido en el ticket
-            document.getElementById('ticketContent').innerHTML = ticketContent;
-        }
+    // Condición para ocultar "Dinero Recibido" y "Cambio" si se selecciona "Tarjeta"
+    if (metodoPago !== 'Tarjeta') {
+        ticketContent += '<tr><td><strong>Dinero Recibido:</strong></td><td>$' + dineroRecibido.toFixed(2) + '</td></tr>';
+        ticketContent += '<tr><td><strong>Cambio:</strong></td><td>$' + (dineroRecibido - total).toFixed(2) + '</td></tr>';
+    }
+    
+    ticketContent += '<tr><td><strong>Total:</strong></td><td>$' + total.toFixed(2) + '</td></tr>';
+    ticketContent += '</tbody>';
+    ticketContent += '</table>';
+
+    // Mensaje de agradecimiento
+    ticketContent += '<p align="center">¡Gracias por tu preferencia!</p>';
+
+    // Cerrar el div principal
+    ticketContent += '</div>';
+
+    // Mostrar el contenido en el ticket
+    document.getElementById('ticketContent').innerHTML = ticketContent;
+}
+
 
         
 
-        function imprimirTicket() {
+function imprimirTicket() {
     // Obtener la fecha y hora actual
     var fechaHora = new Date();
     var fechaHoraFormato = fechaHora.toLocaleString();
 
     // Obtener el contenido del ticket
     var ticketContent = document.getElementById('ticketContent').innerHTML;
+
+    // Obtener el número de folio
+    var numeroFolio = document.getElementById('numeroFolio').value;
 
     // Crear una ventana emergente para imprimir el contenido del ticket con fecha y hora
     var popupWin = window.open('', '_blank', 'width=600,height=600');
@@ -460,7 +504,6 @@ function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
     popupWin.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }</style>');
     
     popupWin.document.write('</head><body>');
-    popupWin.document.write('<p>' + fechaHoraFormato + '</p>');
     popupWin.document.write(ticketContent);
     popupWin.document.write('</body></html>');
     popupWin.document.close();
@@ -469,6 +512,7 @@ function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
     popupWin.print();
     popupWin.close();
 }
+
 
 
 // Cerrar la conexión a la base de datos

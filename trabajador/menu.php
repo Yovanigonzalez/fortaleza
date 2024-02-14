@@ -1,5 +1,12 @@
 <?php
 session_start();
+// Resto del código de login.php
+
+if (empty($_SERVER['HTTP_REFERER'])) {
+    // El acceso se está realizando directamente desde la URL
+    header('Location: error.php');
+    exit();
+}
 ?>
 
 <?php

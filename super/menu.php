@@ -1,5 +1,12 @@
 <?php
 session_start();
+// Resto del código de login.php
+
+if (empty($_SERVER['HTTP_REFERER'])) {
+    // El acceso se está realizando directamente desde la URL
+    header('Location: error.php');
+    exit();
+}
 ?>
 
 <?php
@@ -155,7 +162,7 @@ if (isset($_SESSION['nombre_usuario'])) {
 
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="tienda.php" class="nav-link">
+            <a href="descargar_inventario.php" class="nav-link">
                 <i class="fas fa-exchange-alt nav-icon"></i>
                 <p>Descargar Inventario</p>
             </a>

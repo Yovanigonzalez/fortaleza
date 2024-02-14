@@ -8,18 +8,20 @@ date_default_timezone_set('America/Mexico_City');
 // Obtener la fecha y hora actual en formato deseado
 $fechaHora = date('Y-m-d H:i:s'); // Formato: Año-Mes-Día Hora:Minutos:Segundos
 
-
 // Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
+
+// Obtener el número de folio de la solicitud POST
+$numeroFolio = $_POST['numeroFolio'];
 
 // Obtener los datos de la venta de la solicitud POST
 $descripcion = $_POST['descripcion'];
 $total = $_POST['total'];
 
 // Crear una consulta SQL para insertar la venta en la base de datos
-$sql = "INSERT INTO ventas (descripcion, total, fecha_hora) VALUES ('$descripcion', $total, '$fechaHora')";
+$sql = "INSERT INTO ventas (numero_folio, descripcion, total, fecha_hora) VALUES ('$numeroFolio', '$descripcion', $total, '$fechaHora')";
 
 if ($conn->query($sql) === TRUE) {
     echo "Venta registrada con éxito.";

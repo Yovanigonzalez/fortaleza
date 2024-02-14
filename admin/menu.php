@@ -1,5 +1,12 @@
 <?php
 session_start();
+// Resto del código de login.php
+
+if (empty($_SERVER['HTTP_REFERER'])) {
+    // El acceso se está realizando directamente desde la URL
+    header('Location: error.php');
+    exit();
+}
 ?>
 
 <?php
@@ -206,28 +213,28 @@ if (isset($_SESSION['nombre_usuario'])) {
 
 <!-- Inventario -->
 
-<li class="nav-item has-treeview">
+<!--<li class="nav-item has-treeview">
   <a href="#" class="nav-link">
-    <i class="nav-icon fas fa-user"></i> <!-- Cambiado a un ícono de usuario -->
+    <i class="nav-icon fas fa-user"></i>
     <p>Inventario<i class="fas fa-angle-left right"></i></p>
   </a>
 
   <ul class="nav nav-treeview">
     <li class="nav-item">
       <a href="a_usuario.php" class="nav-link">
-        <i class="fas fa-user-plus nav-icon"></i> <!-- Cambiado a un ícono de agregar usuario -->
+        <i class="fas fa-user-plus nav-icon"></i> 
         <p>Visualizar Inventario</p>
       </a>
     </li>
     
     <li class="nav-item">
       <a href="crud_usuario.php" class="nav-link">
-        <i class="fas fa-cogs nav-icon"></i> <!-- Cambiado a un ícono de configuración o acciones -->
+        <i class="fas fa-cogs nav-icon"></i> 
         <p>Descargar Inventario</p>
       </a>
     </li>
   </ul>
-</li>
+</li>-->
 
         
         <li class="nav-item">
