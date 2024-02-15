@@ -19,16 +19,32 @@ $numeroFolio = $_POST['numeroFolio'];
 // Obtener los datos de la venta de la solicitud POST
 $descripcion = $_POST['descripcion'];
 $total = $_POST['total'];
+$mesa = $_POST['mesa']; // Variable para la mesa seleccionada
 
 // Crear una consulta SQL para insertar la venta en la base de datos
-$sql = "INSERT INTO ventas (numero_folio, descripcion, total, fecha_hora) VALUES ('$numeroFolio', '$descripcion', $total, '$fechaHora')";
+$sqlInsertarVenta = "INSERT INTO ventas (numero_folio, descripcion, total, fecha_hora, mesa) VALUES ('$numeroFolio', '$descripcion', $total, '$fechaHora', '$mesa')";
 
-if ($conn->query($sql) === TRUE) {
-    echo "Venta registrada con éxito.";
-} else {
-    echo "Error al registrar la venta: " . $conn->error;
+// Crear una consulta SQL para actualizar el estatus de la mesa a 'ocupado'
+$sqlActualizarMesa = "UPDATE mesa SET estatus = 'ocupado' WHERE numero_mesa = '$mesa'";
+
+// Iniciar una transacción para asegurar la integridad de los datos
+$conn->begin_transaction();
+
+try {
+    // Insertar la venta en la tabla de ventas
+    $conn->query($sqlInsertarVenta);
+
+    // Actualizar el estatus de la mesa a 'ocupado'
+    $conn->query($sqlActualizarMesa);
+
+    // Confirmar la transacción
+    $conn->commit();
+} catch (Exception $e) {
+    // Revertir la transacción en caso de error
+    $conn->rollback();
 }
 
 // Cerrar la conexión a la base de datos
 $conn->close();
 ?>
+

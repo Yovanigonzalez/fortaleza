@@ -179,62 +179,44 @@ if (isset($_SESSION['nombre_usuario'])) {
 
         <li class="nav-item has-treeview">
   <a href="#" class="nav-link">
-    <i class="nav-icon fas fa-utensils"></i>
+    <i class="nav-icon fas fa-hamburger"></i>
     <p>Agregar <i class="fas fa-angle-left right"></i></p>
   </a>
 
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="a_pollo.php" class="nav-link">
-        <i class="fas fa-drumstick-bite nav-icon"></i>
-        <p>Menu (comida)</p>
-      </a>
+        <a href="a_pollo.php" class="nav-link">
+            <i class="fas fa-bars nav-icon"></i>
+            <p>Menu (comida)</p>
+        </a>
     </li>
 
     <li class="nav-item">
-      <a href="#" class="nav-link">
-        <i class="fas fa-drumstick-bite nav-icon"></i>
+    <a href="#" class="nav-link">
+        <i class="fas fa-tasks nav-icon"></i>
         <p>Acciones (comida)</p>
-      </a>
-    </li>
-    
+    </a>
+</li>
 
+    
     <li class="nav-item">
-      <a href="entradas.php" class="nav-link">
-        <i class="fas fa-drumstick-bite nav-icon"></i>
+    <a href="entradas.php" class="nav-link">
+        <i class="fas fa-utensils nav-icon"></i>
         <p>Entradas</p>
-      </a>
-    </li>
- 
+    </a>
+</li>
+
   </ul>
 </li>
 
 
 
-<!-- Inventario -->
-
-<!--<li class="nav-item has-treeview">
-  <a href="#" class="nav-link">
-    <i class="nav-icon fas fa-user"></i>
-    <p>Inventario<i class="fas fa-angle-left right"></i></p>
-  </a>
-
-  <ul class="nav nav-treeview">
-    <li class="nav-item">
-      <a href="a_usuario.php" class="nav-link">
-        <i class="fas fa-user-plus nav-icon"></i> 
-        <p>Visualizar Inventario</p>
-      </a>
-    </li>
-    
-    <li class="nav-item">
-      <a href="crud_usuario.php" class="nav-link">
-        <i class="fas fa-cogs nav-icon"></i> 
-        <p>Descargar Inventario</p>
-      </a>
-    </li>
-  </ul>
-</li>-->
+<li class="nav-item">
+    <a href="mesa.php" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>Agregar mesa</p>
+    </a>
+</li>
 
         
         <li class="nav-item">

@@ -128,14 +128,31 @@ if (isset($_SESSION['nombre_usuario'])) {
         </a>
         </li>  
 
-<li class="nav-item">
-        <a href="caja.php" class="nav-link">
-            <i class="nav-icon fas fa-door-closed"></i>
-            <p>Caja</p>
+        <li class="nav-item">
+        <a href="mas.php" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+            <p>Agregar Comida a Mesa</p>
         </a>
         </li>
 
+
+        <li class="nav-item">
+    <a href="mesa.php" class="nav-link">
+        <i class="nav-icon fas fa-money-bill-wave"></i>
+        <p>Cobrar Mesa</p>
+    </a>
+</li>
+
+
         
+<li class="nav-item">
+    <a href="caja.php" class="nav-link">
+        <i class="nav-icon fas fa-cash-register"></i>
+        <p>Corte de Caja</p>
+    </a>
+</li>
+
+
         <li class="nav-item">
         <a href="logout.php" class="nav-link">
             <i class="nav-icon fas fa-door-closed"></i>
