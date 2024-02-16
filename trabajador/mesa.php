@@ -61,14 +61,14 @@ $result = $conn->query($sql);
                                 <div class="card-footer">
                                     <!-- Botón "Agregar Más" -->
                                     <!-- Botón "Agregar Más" -->
-                                    <form action="agregar_mas.php" method="post">
+                                    <form action="cobrar.php" method="post">
                                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                                         <input type="hidden" name="numero_folio" value="<?php echo $numero_folio; ?>">
                                         <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
                                         <input type="hidden" name="total" value="<?php echo $total; ?>">
                                         <input type="hidden" name="fecha_hora" value="<?php echo $fecha_hora; ?>">
                                         <input type="hidden" name="mesa" value="<?php echo $mesa; ?>">
-                                        <button type="submit" class="btn btn-primary">Agregar Más</button>
+                                        <button type="submit" class="btn btn-primary">Cobrar Mesa</button>
                                     </form>
 
                                 </div>

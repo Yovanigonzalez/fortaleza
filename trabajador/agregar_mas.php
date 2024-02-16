@@ -8,13 +8,9 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-
-
 // Consulta SQL para obtener todos los productos de la tabla 'productos'
 $sqlProductos = "SELECT id, cantidad, descripcion, precio, categoria FROM producto";
 $resultProductos = $conn->query($sqlProductos);
-
-
 
 ?>
 
@@ -40,7 +36,6 @@ $resultProductos = $conn->query($sqlProductos);
                 <br>
                 <div class="container-fluid">
                     <div class="row">
-
                         <!-- Columna del Punto de Venta -->
                         <div class="col-md-4">
                             <div class="card">
@@ -68,31 +63,31 @@ $resultProductos = $conn->query($sqlProductos);
                                         <p>Mesa: <?php echo $mesa; ?></p>
                                         <p>Pedido: <?php echo $descripcion; ?></p>
                                         <p>Total: <?php echo $total; ?></p>
-                                        <!-- Se puede agregar contenido HTML adicional o acciones aquí -->
                                     </div>
                                     <?php
-                                        // Tu código aquí para procesar los datos o realizar acciones adicionales
-
-                                        // Cerrar la conexión a la base de datos después de usarla
                                         $conn->close();
                                     }
                                     ?>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Nueva Columna con Motor de Búsqueda -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Buscar</h3>
-                                </div>
-                                <div class="card-body">
-                                    <!-- Simple form for search -->
-  
-                                    <section>
+                                    <!-- Add "Agregar mas comida" button -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMasModal">
+                                        Agregar mas comida
+                                    </button>
 
-                                        <h4>Buscar Productos</h4>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="agregarMasModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Agregar mas comida</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Real-time search input -->
+
+                                                    <h4>Buscar Productos</h4>
                                         <!-- Campo de búsqueda para productos de la tabla 'productos' -->
                                         <input type="text" id="searchProductos" class="form-control" onkeyup="searchProductos()" placeholder="Buscar productos...">
                                         <!-- Lista de productos de la tabla 'productos' (inicialmente oculta) -->
@@ -108,29 +103,49 @@ $resultProductos = $conn->query($sqlProductos);
                                             }
                                             ?>
                                         </ul>
-                                    </section>
-
-                                    <section>
-                                        <h4>Carrito de Compra</h4>
-
-                                        <!-- Mostrar productos agregados al carrito -->
-                                        <ul id="carrito">
-                                            <!-- Los elementos del carrito se agregarán aquí dinámicamente -->
-                                        </ul>
-                                        <p>Total: $<span id="total">0</span></p>
+                                        <br>
+                                        <!-- Agrega esto donde desees mostrar el contenido del carrito -->
+                                        <h6 align="center">Carrito</h6>
+                                        <div id="carrito-container"></div>
 
                                         <br>
-                                        <!-- Botón para realizar el pago e imprimir el ticket -->
-                                        <button class="btn btn-primary" onclick="ventas()">Solo registrar venta</button>
 
-                                    </section>
-                                    <!-- Fin del código del punto de venta -->
+                                        <br>
+
+                                        <!-- Campo para mostrar la suma total pero no editable con estilos de Bootstrap -->
+                                        <div class="form-group">
+                                            <label for="sumaTotal" class="h6">Subtotal:</label>
+                                            <input type="text" class="form-control" id="sumaTotal" readonly>
+                                        </div>
+
+                                        <!-- Mostrar el total nuevamente en el modal -->
+                                        <div class="form-group">
+                                            <label for="sumaTotalModal" class="h6">Total anterior:</label>
+                                            <input type="text" class="form-control" id="sumaTotalModal" value="<?php echo $total; ?>" readonly>
+                                        </div>
+
+                                        <!-- Nuevo campo para mostrar el nuevo total -->
+                                        <div class="form-group">
+                                            <label for="nuevoTotal" class="h6">Nuevo Total:</label>
+                                            <input type="text" class="form-control" id="nuevoTotal" readonly>
+                                        </div>
 
 
+
+                                                    <!-- Display search results here -->
+                                                    <div id="searchResults"></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    <!-- Botón "Agregar Nueva Orden" -->
+                                                    <button type="button" class="btn btn-success" onclick="agregarNuevaOrden()">Agregar Nueva Orden</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
@@ -142,37 +157,118 @@ $resultProductos = $conn->query($sqlProductos);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-              function searchProductos() {
-            var input = document.getElementById("searchProductos");
-            var ul = document.getElementById("productosList");
-            var lis = ul.getElementsByTagName("li");
+    var carrito = []; // Variable global para almacenar productos en el carrito
 
-            // Oculta la lista si el campo de búsqueda está vacío
-            if (input.value.trim() === "") {
-                ul.style.display = "none";
-                return;
-            }
+    function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
+        var producto = {
+            id: id,
+            descripcion: descripcion,
+            precio: precio,
+            cantidad: cantidad,
+            categoria: categoria
+        };
 
-            // Obtiene el texto ingresado en el campo de búsqueda
-            var searchTerm = input.value.trim().toLowerCase();
+        carrito.push(producto);
+        actualizarInterfazCarrito(); // Llama a la función para actualizar la interfaz del carrito
+        console.log("Producto agregado al carrito:", producto);
 
-            // Recorre los elementos de la lista y muestra/oculta según la búsqueda
-            for (var i = 0; i < lis.length; i++) {
-                var li = lis[i];
-                var productoText = li.textContent || li.innerText;
+        // Limpia el campo de búsqueda
+        document.getElementById("searchProductos").value = "";
 
-                // Compara el texto del producto con el término de búsqueda
-                if (productoText.toLowerCase().indexOf(searchTerm) > -1) {
-                    li.style.display = "block"; // Muestra el elemento si coincide
-                } else {
-                    li.style.display = "none"; // Oculta el elemento si no coincide
-                }
-            }
+        // Oculta la lista de productos
+        document.getElementById("productosList").style.display = "none";
+    }
+</script>
 
-            // Muestra la lista (aunque estén ocultos algunos elementos)
-            ul.style.display = "block";
+
+<script>
+    function agregarNuevaOrden() {
+    // Aquí puedes realizar acciones adicionales antes de agregar una nueva orden, si es necesario.
+    
+    // Por ejemplo, puedes reiniciar el carrito, limpiar los campos o realizar otras acciones.
+
+    // Después de realizar las acciones necesarias, puedes redirigir al usuario a una nueva página o realizar otras operaciones.
+    alert("Se agregó una nueva orden.");
+}
+
+</script>
+<!-- Actualización de la función actualizarInterfazCarrito() -->
+<script>
+function actualizarInterfazCarrito() {
+    var carritoContainer = document.getElementById("carrito-container");
+    carritoContainer.innerHTML = ""; // Limpia el contenido actual del contenedor del carrito
+
+    var totalCarrito = 0; // Inicializa la suma total
+
+    // Recorre el carrito y agrega cada producto al contenedor
+    carrito.forEach(function (producto) {
+        totalCarrito += producto.precio; // Suma el precio del producto al total
+
+        var productoHTML = document.createElement("div");
+        productoHTML.innerHTML = `<p>${producto.descripcion} - ${producto.cantidad} x $${producto.precio.toFixed(2)}</p>`;
+        carritoContainer.appendChild(productoHTML);
+    });
+
+    // Muestra la nueva suma total en el elemento con id "sumaTotal"
+    var sumaTotalElemento = document.getElementById("sumaTotal");
+    sumaTotalElemento.value = totalCarrito.toFixed(2); // Asigna el valor al campo de texto
+
+    // Obtiene el total anterior del elemento con id "sumaTotalModal"
+    var totalAnterior = parseFloat(document.getElementById("sumaTotalModal").value);
+
+    // Calcula el nuevo total sumando el total anterior y la nueva suma del carrito
+    var nuevoTotal = totalAnterior + totalCarrito;
+
+    // Muestra el nuevo total en el campo de texto con id "nuevoTotal"
+    var nuevoTotalElemento = document.getElementById("nuevoTotal");
+    nuevoTotalElemento.value = nuevoTotal.toFixed(2);
+}
+
+</script>
+
+
+<script>
+    function searchProductos() {
+        var input = document.getElementById("searchProductos");
+        var ul = document.getElementById("productosList");
+        var lis = ul.getElementsByTagName("li");
+
+        // Oculta la lista si el campo de búsqueda está vacío
+        if (input.value.trim() === "") {
+            ul.style.display = "none";
+            return;
         }
 
-    </script>
+        // Obtiene el texto ingresado en el campo de búsqueda
+        var searchTerm = input.value.trim().toLowerCase();
+
+        // Recorre los elementos de la lista y muestra/oculta según la búsqueda
+        for (var i = 0; i < lis.length; i++) {
+            var li = lis[i];
+            var productoText = li.textContent || li.innerText;
+
+            // Compara el texto del producto con el término de búsqueda
+            if (productoText.toLowerCase().indexOf(searchTerm) > -1) {
+                li.style.display = "block"; // Muestra el elemento si coincide
+            } else {
+                li.style.display = "none"; // Oculta el elemento si no coincide
+            }
+        }
+
+        // Muestra la lista (aunque estén ocultos algunos elementos)
+        ul.style.display = "block";
+    }
+</script>
+<script>
+    // JavaScript for real-time search
+    $(document).ready(function () {
+        $('#realTimeSearch').on('input', function () {
+            var searchQuery = $(this).val();
+            // Perform AJAX search and update #searchResults
+            // You'll need to implement this part based on your backend logic
+            // Example: $.ajax({ url: 'search.php', data: { query: searchQuery }, success: function(data) { $('#searchResults').html(data); } });
+        });
+    });
+</script>
 </body>
 </html>
