@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-02-2024 a las 07:32:09
+-- Tiempo de generación: 16-02-2024 a las 21:54:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -47,6 +47,35 @@ INSERT INTO `digital` (`id`, `subtitulo`) VALUES
 (8, 'GUARNICIONES'),
 (9, 'BEBIDAS'),
 (10, 'MIXIOTES');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entradas`
+--
+
+CREATE TABLE `entradas` (
+  `id` int(11) NOT NULL,
+  `categoria` varchar(255) NOT NULL,
+  `producto` varchar(255) NOT NULL,
+  `stock` decimal(10,2) NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `entradas`
+--
+
+INSERT INTO `entradas` (`id`, `categoria`, `producto`, `stock`, `fecha_creacion`) VALUES
+(1, 'Pollo', 'Pollo', -11.50, '2024-02-13 18:05:14'),
+(2, 'Alitas', 'Alitas', 22.00, '2024-02-13 18:05:38'),
+(3, 'Tenders', 'Tenders', 9.00, '2024-02-13 18:06:00'),
+(4, 'Crepas', 'Crepas', 100.00, '2024-02-13 18:06:06'),
+(5, 'Hamburguesas', 'Hamburguesas', 47.00, '2024-02-13 18:06:15'),
+(6, 'Costillas', 'Costillas', 18.25, '2024-02-13 18:06:22'),
+(7, 'Guarniciones', 'Guarniciones', 99.00, '2024-02-13 18:06:30'),
+(8, 'Mixiotes', 'Mixiotes', -50.00, '2024-02-13 18:06:39'),
+(9, 'Bebidas', 'Bebidas', 29.00, '2024-02-13 18:06:46');
 
 -- --------------------------------------------------------
 
@@ -112,6 +141,34 @@ INSERT INTO `menu` (`id`, `titulo`, `subtitulo`, `descripcion`, `precio1`, `prec
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mesa`
+--
+
+CREATE TABLE `mesa` (
+  `id` int(11) NOT NULL,
+  `numero_mesa` int(11) NOT NULL,
+  `estatus` varchar(20) NOT NULL DEFAULT 'desocupada'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mesa`
+--
+
+INSERT INTO `mesa` (`id`, `numero_mesa`, `estatus`) VALUES
+(1, 1, 'desocupada'),
+(2, 2, 'ocupado'),
+(3, 3, 'ocupado'),
+(4, 4, 'ocupado'),
+(5, 5, 'desocupada'),
+(6, 6, 'desocupada'),
+(7, 7, 'desocupada'),
+(8, 8, 'desocupada'),
+(9, 9, 'desocupada'),
+(10, 10, 'desocupada');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
@@ -119,7 +176,7 @@ CREATE TABLE `producto` (
   `id` int(11) NOT NULL,
   `cantidad` decimal(5,2) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
-  `precio` decimal(10,2) NOT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
   `categoria` varchar(50) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -167,7 +224,76 @@ INSERT INTO `producto` (`id`, `cantidad`, `descripcion`, `precio`, `categoria`, 
 (36, 2.00, '2 Pollo Chipotle', 360.00, 'Pollo', '2024-02-11 06:15:09'),
 (37, 0.50, '1/2 Pollo Adobado', 105.00, 'Pollo', '2024-02-11 06:15:19'),
 (39, 1.00, '1 Pollo Adobado', 190.00, 'Pollo', '2024-02-11 06:15:57'),
-(40, 2.00, '2 Pollo Adobado', 360.00, 'Pollo', '2024-02-11 06:16:04');
+(40, 2.00, '2 Pollo Adobado', 360.00, 'Pollo', '2024-02-11 06:16:04'),
+(41, 1.00, '1 Pollo Combos Tradicional Asado', 290.00, 'Pollo', '2024-02-12 17:54:32'),
+(42, 1.00, '1 Pollo Combos Tradicional Rostizado', 290.00, 'Pollo', '2024-02-12 17:54:43'),
+(43, 1.00, '1 Pollo Combos Tradicional Barbacoa', 290.00, 'Pollo', '2024-02-12 17:54:53'),
+(44, 1.00, '1 Pollo Combos Broaster', 305.00, 'Pollo', '2024-02-12 17:55:03'),
+(45, 1.00, '1 Pollo Combos Gourmet', 305.00, 'Pollo', '2024-02-12 17:55:16'),
+(46, 6.00, '1 Orden de Alitas (6 piezas)', 75.00, 'Alitas', '2024-02-12 18:06:37'),
+(47, 12.00, 'Paquete 1 (12 piezas) Alitas', 120.00, 'Alitas', '2024-02-12 18:06:49'),
+(48, 24.00, 'Paquete 2 (24 piezas) Alitas', 230.00, 'Alitas', '2024-02-12 18:07:37'),
+(49, 36.00, 'Paquete Premium (36 piezas) Alitas', 325.00, 'Alitas', '2024-02-12 18:07:50'),
+(50, 10.00, '10 Piezas Tenders', 220.00, 'Tenders', '2024-02-12 18:15:14'),
+(51, 4.00, '4 piezas Tenders', 135.00, 'Tenders', '2024-02-12 18:15:33'),
+(53, 4.00, '1 Orden Crepas', 65.00, 'Crepas', '2024-02-12 21:01:26'),
+(54, 8.00, 'Paquete 1 Crepas', 120.00, 'Crepas', '2024-02-12 21:01:42'),
+(55, 12.00, 'Paquete 2 Crepas', 170.00, 'Crepas', '2024-02-12 21:01:57'),
+(56, 16.00, 'Paquete Premium Crepas', 210.00, 'Crepas', '2024-02-12 21:02:19'),
+(57, 1.00, '1 Hamburguesa Sencilla', 75.00, 'Hamburguesas', '2024-02-12 21:11:37'),
+(58, 1.00, '1 Hamburguesa Doble', 95.00, 'Hamburguesas', '2024-02-12 21:11:50'),
+(59, 1.00, '1 Hamburguesa Premium', 105.00, 'Hamburguesas', '2024-02-12 21:12:00'),
+(60, 1.50, '1 Kilo Costilla BBQ', 350.00, 'Costillas', '2024-02-13 15:04:10'),
+(61, 1.50, '1 Kilo Costilla Encacahuatado', 350.00, 'Costillas', '2024-02-13 15:04:30'),
+(62, 1.50, '1 Kilo Costilla Chilpetin', 350.00, 'Costillas', '2024-02-13 15:04:53'),
+(63, 1.50, '1 Kilo Costilla Tamarindo', 350.00, 'Costillas', '2024-02-13 15:05:10'),
+(64, 1.50, '1 Kilo Costilla Mango Habanero', 350.00, 'Costillas', '2024-02-13 15:05:40'),
+(65, 1.50, '1 Kilo Costilla Hormiga Limon', 350.00, 'Costillas', '2024-02-13 15:05:57'),
+(66, 1.50, '1 Kilo Costilla A La Diabla', 350.00, 'Costillas', '2024-02-13 15:06:51'),
+(67, 1.50, '1 Kilo Costilla Chipotle', 350.00, 'Costillas', '2024-02-13 15:07:11'),
+(68, 0.50, '1/2 Kilo Costilla BBQ', 195.00, 'Costillas', '2024-02-13 15:18:24'),
+(69, 0.50, '1/2 Kilo Costilla Encacahuatado', 195.00, 'Costillas', '2024-02-13 15:18:39'),
+(70, 0.50, '1/2 Kilo Costilla Chilpetin', 195.00, 'Costillas', '2024-02-13 15:19:08'),
+(71, 0.50, '1/2 Kilo Costilla Tamarindo', 195.00, 'Costillas', '2024-02-13 15:19:45'),
+(72, 0.50, '1/2 Kilo Costilla Mango Habanero', 195.00, 'Costillas', '2024-02-13 15:20:00'),
+(73, 0.50, '1/2 Kilo Costilla Hormiga Limon', 195.00, 'Costillas', '2024-02-13 15:20:12'),
+(74, 0.50, '1/2 Kilo Costilla A La Diabla', 195.00, 'Costillas', '2024-02-13 15:20:26'),
+(75, 0.50, '1/2 Kilo Costilla Chipotle', 195.00, 'Costillas', '2024-02-13 15:20:40'),
+(76, 0.25, '1/4 Kilo Costilla BBQ', 105.00, 'Costillas', '2024-02-13 15:28:14'),
+(77, 0.25, '1/4 Kilo Costilla Encacahuatado', 105.00, 'Costillas', '2024-02-13 15:28:30'),
+(78, 0.25, '1/4 Kilo Costilla Chilpetin', 105.00, 'Costillas', '2024-02-13 15:28:51'),
+(79, 0.25, '1/4 Kilo Costilla Tamarindo', 105.00, 'Costillas', '2024-02-13 15:29:19'),
+(80, 0.25, '1/4 Kilo Costilla Mango Habanero', 105.00, 'Costillas', '2024-02-13 15:29:31'),
+(81, 0.25, '1/4 Kilo Costilla Hormiga Limon', 105.00, 'Costillas', '2024-02-13 15:33:03'),
+(82, 0.25, '1/4 Kilo Costilla A La Diabla', 105.00, 'Costillas', '2024-02-13 15:33:17'),
+(83, 0.25, '1/4 Kilo Costilla Chipotle', 105.00, 'Costillas', '2024-02-13 15:33:31'),
+(84, 5.00, 'Paquete 1 (5 Mixiotes)', 105.00, 'Mixiotes', '2024-02-13 16:17:15'),
+(85, 5.00, 'Paquete 2 (5 Mixiotes + Guarnicion Chica)', 140.00, 'Mixiotes', '2024-02-13 16:20:12'),
+(86, 10.00, 'Paquete 3 (10 Mixiotes + Guarnicion Chica)', 265.00, 'Mixiotes', '2024-02-13 16:20:21'),
+(87, 15.00, 'Paquete 4 (15 Mixiotes + Guarnicion Chica)', 375.00, 'Mixiotes', '2024-02-13 16:20:32'),
+(88, 1.00, 'Nopales', 35.00, 'Guarniciones', '2024-02-13 16:49:34'),
+(89, 1.00, 'Arroz', 35.00, 'Guarniciones', '2024-02-13 16:49:53'),
+(90, 1.00, 'Espagueti', 35.00, 'Guarniciones', '2024-02-13 16:50:06'),
+(91, 1.00, 'Refritos', 45.00, 'Guarniciones', '2024-02-13 16:50:25'),
+(92, 1.00, 'Charros', 45.00, 'Guarniciones', '2024-02-13 16:50:38'),
+(93, 1.00, 'Papas Cambray', 45.00, 'Guarniciones', '2024-02-13 16:51:24'),
+(94, 1.00, 'Papas a la Francesa', 45.00, 'Guarniciones', '2024-02-13 16:51:34'),
+(95, 1.00, 'Papas Gajo', 45.00, 'Guarniciones', '2024-02-13 16:51:45'),
+(96, 1.00, 'Ensalada Rusa', 45.00, 'Guarniciones', '2024-02-13 16:51:57'),
+(97, 1.00, 'Ensalada Dulce', 45.00, 'Guarniciones', '2024-02-13 16:52:18'),
+(98, 1.00, 'Nuggets', 45.00, 'Guarniciones', '2024-02-13 16:52:29'),
+(99, 1.00, 'Totopos', 20.00, 'Guarniciones', '2024-02-13 16:52:42'),
+(100, 1.00, 'Tortilla 1/2 kilo', 20.00, 'Guarniciones', '2024-02-13 16:52:51'),
+(101, 1.00, 'Orden 1 kilo Tortilla', 35.00, 'Guarniciones', '2024-02-13 16:53:02'),
+(102, 1.00, 'Papitas Fritas (Bolsita)', 20.00, 'Guarniciones', '2024-02-13 16:53:13'),
+(103, 1.00, 'Platanos Fritos', 35.00, 'Guarniciones', '2024-02-13 16:53:24'),
+(104, 1.00, 'Agua natural', 15.00, 'Bebidas', '2024-02-13 16:53:35'),
+(105, 1.00, 'Agua mineral', 25.00, 'Bebidas', '2024-02-13 16:53:46'),
+(106, 1.00, 'Refresco vidrio 355 ml', 25.00, 'Bebidas', '2024-02-13 16:53:57'),
+(107, 1.00, 'Refresco vidrio 1 1/4 ml', 35.00, 'Bebidas', '2024-02-13 16:54:14'),
+(108, 1.00, 'Refresco 2L', 45.00, 'Bebidas', '2024-02-13 16:54:26'),
+(109, 1.00, 'Refresco 3L', 60.00, 'Bebidas', '2024-02-13 16:54:39'),
+(110, 1.00, 'Jugo de lata', 20.00, 'Bebidas', '2024-02-13 16:54:47');
 
 -- --------------------------------------------------------
 
@@ -209,6 +335,35 @@ INSERT INTO `usuarios` (`id`, `nombre_usuario`, `telefono`, `correo`, `contrasen
 (17, 'Yovani', '2491753453', 'giovanigonza88@gmail.com', '$2y$10$9cUTt/3z3GA4BP95p4MbK.bPHk15jDdFC64LTn2vopcWxm8H9xYA6', 'admin'),
 (18, 't', '2381667070', 'y@gmail.com', '$2y$10$bbEK010tgRoknQx8uGc2Me6GamzMdxx9m1DR/HHVz.g5bWSpim4bK', 'cliente');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ventas`
+--
+
+CREATE TABLE `ventas` (
+  `id` int(11) NOT NULL,
+  `numero_folio` int(11) DEFAULT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `fecha_hora` datetime NOT NULL,
+  `mesa` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`id`, `numero_folio`, `descripcion`, `total`, `fecha_hora`, `mesa`) VALUES
+(44, 1, '1/2 Pollo Asado, 1/2 Pollo BBQ', 200.00, '2024-02-14 22:08:15', '1'),
+(45, 2, '1/2 Pollo Asado', 95.00, '2024-02-14 22:09:40', '3'),
+(46, 3, '1 Pollo Asado', 175.00, '2024-02-14 22:26:50', ''),
+(47, 4, '1 Pollo Asado', 175.00, '2024-02-16 00:10:10', '2'),
+(48, 5, '1/2 Pollo Barbacoa', 95.00, '2024-02-16 00:10:34', '4'),
+(49, 6, '1/2 Pollo Asado', 95.00, '2024-02-16 12:26:53', ''),
+(50, 6, '1/2 Pollo Asado', 95.00, '2024-02-16 12:26:59', ''),
+(51, 7, '1/2 Pollo Asado', 95.00, '2024-02-16 13:47:40', '');
+
 --
 -- Índices para tablas volcadas
 --
@@ -220,9 +375,22 @@ ALTER TABLE `digital`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `entradas`
+--
+ALTER TABLE `entradas`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_categoria_producto` (`categoria`,`producto`);
+
+--
 -- Indices de la tabla `menu`
 --
 ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `mesa`
+--
+ALTER TABLE `mesa`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -244,6 +412,12 @@ ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -254,16 +428,28 @@ ALTER TABLE `digital`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT de la tabla `entradas`
+--
+ALTER TABLE `entradas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
+-- AUTO_INCREMENT de la tabla `mesa`
+--
+ALTER TABLE `mesa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT de la tabla `suscripciones`
@@ -276,6 +462,12 @@ ALTER TABLE `suscripciones`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
