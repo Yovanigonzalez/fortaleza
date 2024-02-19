@@ -20,9 +20,13 @@ $numeroFolio = $_POST['numeroFolio'];
 $descripcion = $_POST['descripcion'];
 $total = $_POST['total'];
 $mesa = $_POST['mesa']; // Variable para la mesa seleccionada
+$preciosProductos = $_POST['preciosProductos']; // Precios individuales de los productos
+
+// Convertir el array de precios a formato JSON para almacenar en la base de datos
+$preciosProductosJSON = json_encode($preciosProductos);
 
 // Crear una consulta SQL para insertar la venta en la base de datos
-$sqlInsertarVenta = "INSERT INTO ventas (numero_folio, descripcion, total, fecha_hora, mesa) VALUES ('$numeroFolio', '$descripcion', $total, '$fechaHora', '$mesa')";
+$sqlInsertarVenta = "INSERT INTO ventas (numero_folio, descripcion, total, fecha_hora, mesa, precios_productos) VALUES ('$numeroFolio', '$descripcion', $total, '$fechaHora', '$mesa', '$preciosProductosJSON')";
 
 // Crear una consulta SQL para actualizar el estatus de la mesa a 'ocupado'
 $sqlActualizarMesa = "UPDATE mesa SET estatus = 'ocupado' WHERE numero_mesa = '$mesa'";
@@ -47,4 +51,3 @@ try {
 // Cerrar la conexión a la base de datos
 $conn->close();
 ?>
-

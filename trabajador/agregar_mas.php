@@ -45,29 +45,43 @@ $resultProductos = $conn->query($sqlProductos);
 
                                 <!-- Agregar el contenido de agregar_mas.php aquí -->
                                 <div class="card-body">
-                                    <?php
-                                    include '../config/conexion.php';
+                                <?php
+                                include '../config/conexion.php';
 
-                                    // Verificar si se envían datos mediante el método POST
-                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                        // Recuperar datos del formulario POST
-                                        $id = $_POST['id'];
-                                        $numero_folio = $_POST['numero_folio'];
-                                        $descripcion = $_POST['descripcion'];
-                                        $total = $_POST['total'];
-                                        $fecha_hora = $_POST['fecha_hora'];
-                                        $mesa = $_POST['mesa'];
-                                    ?>
-                                    <div class="container">
-                                        <h2>Información del Pedido</h2>
-                                        <p>Mesa: <?php echo $mesa; ?></p>
-                                        <p>Pedido: <?php echo $descripcion; ?></p>
-                                        <p>Total: <?php echo $total; ?></p>
-                                    </div>
-                                    <?php
-                                        $conn->close();
+                                // Verificar si se envían datos mediante el método POST
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                    // Recuperar datos del formulario POST
+                                    $id = $_POST['id'];
+                                    $numero_folio = $_POST['numero_folio'];
+                                    $descripcion = $_POST['descripcion'];
+                                    $total = $_POST['total'];
+                                    $fecha_hora = $_POST['fecha_hora'];
+                                    $mesa = $_POST['mesa'];
+
+                                    // Recuperar precios de productos del formulario POST
+                                    $precios_productos = array();
+                                    for ($i = 0; isset($_POST['precio_producto_' . $i]); $i++) {
+                                        $precio = $_POST['precio_producto_' . $i];
+                                        $precios_productos[] = $precio;
                                     }
-                                    ?>
+                                    // Convertir el array de precios a formato JSON
+                                    $precios_json = json_encode($precios_productos);
+                                ?>
+
+                                <div class="container">
+                                    <h6 align="center">Información del Pedido</h6>
+                                    <br>
+                                    <p>Mesa: <?php echo $mesa; ?></p>
+                                    <p>Pedido: <?php echo $descripcion; ?></p>
+                                    <p>Precios de Productos: <?php echo implode(", ", $precios_productos); ?></p>
+                                    <p>Total: <?php echo $total; ?></p>
+                                </div>
+
+                                <?php
+                                    $conn->close();
+                                }
+                                ?>
+
 
                                     <!-- Add "Agregar mas comida" button -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMasModal">
@@ -182,16 +196,48 @@ $resultProductos = $conn->query($sqlProductos);
 
 
 <script>
-    function agregarNuevaOrden() {
-    // Aquí puedes realizar acciones adicionales antes de agregar una nueva orden, si es necesario.
     
-    // Por ejemplo, puedes reiniciar el carrito, limpiar los campos o realizar otras acciones.
+function agregarNuevaOrden() {
+    // Obtener el valor del campo de entrada 'Nuevo Total'
+    var nuevoTotal = document.getElementById("nuevoTotal").value;
 
-    // Después de realizar las acciones necesarias, puedes redirigir al usuario a una nueva página o realizar otras operaciones.
-    alert("Se agregó una nueva orden.");
+    // Obtener la descripción de productos del carrito y los precios de productos del carrito como antes
+    var descripcionProductos = carrito.map(function(producto) {
+        return producto.descripcion;
+    }).join(', ');
+
+    var precios_productos = carrito.map(function(producto) {
+        return producto.precio;
+    });
+
+    // Realizar la solicitud AJAX con el dato adicional 'nuevoTotal'
+    $.ajax({
+        type: 'POST',
+        url: 'guardar_orden.php', // Reemplaza con la ruta correcta a tu script PHP
+        data: {
+            id: <?php echo $id; ?>,
+            numero_folio: <?php echo $numero_folio; ?>,
+            descripcion: descripcionProductos,
+            fecha_hora: '<?php echo $fecha_hora; ?>',
+            mesa: <?php echo $mesa; ?>,
+            precios_productos: precios_productos,
+            nuevoTotal: nuevoTotal  // Incluye nuevoTotal en la carga de datos
+        },
+        success: function(response) {
+            alert(response); // Muestra un mensaje de éxito o error
+            // Puedes realizar más acciones aquí después de actualizar la orden
+        },
+        error: function(error) {
+            console.error('Error al actualizar la orden:', error);
+        }
+    });
 }
 
 </script>
+
+
+
+
 <!-- Actualización de la función actualizarInterfazCarrito() -->
 <script>
 function actualizarInterfazCarrito() {

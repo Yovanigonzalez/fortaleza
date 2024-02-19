@@ -45,6 +45,8 @@ $result = $conn->query($sql);
                             $total = $row['total'];
                             $fecha_hora = $row['fecha_hora'];
                             $mesa = $row['mesa'];
+                            $precios_productos = $row['precios_productos']; // Asegúrate de que el nombre de la columna sea correcto
+
                         ?>
                         <!-- Columna del Punto de Venta -->
                         <div class="col-md-4">
@@ -56,6 +58,15 @@ $result = $conn->query($sql);
                                     <!-- Código del punto de venta -->
                                     <p>Numero de venta: <?php echo $numero_folio; ?></p>
                                     <p>Descripción: <?php echo $descripcion; ?></p>
+                                                                           <!-- Decodificar y mostrar los precios de productos -->
+                                                                           <?php
+                                            $precios_array = json_decode($precios_productos);
+                                            if ($precios_array !== null) {
+                                                echo "<p>Precios de productos: " . implode(", ", $precios_array) . "</p>";
+                                            } else {
+                                                echo "<p>Error al decodificar los precios de productos.</p>";
+                                            }
+                                        ?>
                                     <p>Total: <?php echo $total; ?></p>
                                 </div>
                                 <div class="card-footer">
@@ -68,6 +79,8 @@ $result = $conn->query($sql);
                                         <input type="hidden" name="total" value="<?php echo $total; ?>">
                                         <input type="hidden" name="fecha_hora" value="<?php echo $fecha_hora; ?>">
                                         <input type="hidden" name="mesa" value="<?php echo $mesa; ?>">
+                                           <!-- Agrega los precios como un campo oculto -->
+    <input type="hidden" name="precios_productos" value="<?php echo htmlspecialchars($precios_productos); ?>">
                                         <button type="submit" class="btn btn-primary">Cobrar Mesa</button>
                                     </form>
 

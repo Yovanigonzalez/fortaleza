@@ -166,8 +166,7 @@ $resultMesas = $conn->query($sqlMesas);
         return total;
     }
 
-// Función para registrar la venta mediante una solicitud AJAX
-function ventas() {
+    function ventas() {
     // Obtener información relevante
     var descripcion = obtenerDescripcionVenta();
     var total = obtenerTotalVenta();
@@ -176,6 +175,9 @@ function ventas() {
 
     // Obtener la mesa seleccionada
     var mesaSeleccionada = document.getElementById('mesa').value;
+
+    // Obtener precios individuales de productos del carrito
+    var preciosProductos = obtenerPreciosProductos();
 
     // Realizar una solicitud AJAX para guardar los datos de ventas en la base de datos
     $.ajax({
@@ -186,7 +188,8 @@ function ventas() {
             total: total,
             fechaHora: fechaHora,
             numeroFolio: numeroFolio, // Agregar el número de folio a los datos
-            mesa: mesaSeleccionada // Agregar la mesa seleccionada a los datos
+            mesa: mesaSeleccionada, // Agregar la mesa seleccionada a los datos
+            preciosProductos: preciosProductos  // Agregar los precios de los productos
         },
         success: function(response) {
             // Los datos de ventas se han registrado con éxito
@@ -198,6 +201,20 @@ function ventas() {
         }
     });
 }
+
+function obtenerPreciosProductos() {
+    var precios = [];
+    var carritoItems = document.getElementById('carrito').getElementsByTagName('li');
+
+    for (var i = 0; i < carritoItems.length; i++) {
+        var itemText = carritoItems[i].textContent;
+        var precio = parseFloat(itemText.split(' - Precio: $')[1]);
+        precios.push(precio);
+    }
+
+    return precios;
+}
+
 
 
 // Nueva función para obtener el número de folio

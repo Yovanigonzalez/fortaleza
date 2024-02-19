@@ -58,14 +58,26 @@ $resultProductos = $conn->query($sqlProductos);
                                         $fecha_hora = $_POST['fecha_hora'];
                                         $mesa = $_POST['mesa'];
                                     ?>
-<div class="container">
-    <h2>Información del Pedido</h2>
-    <p id="mesa">Mesa: <?php echo $mesa; ?></p>
-    <p id="pedido">Pedido: <?php echo $descripcion; ?></p>
-    <p id="total">Total: <?php echo $total; ?></p>
-    <!-- Agrega el botón "Imprimir" aquí -->
-    <button type="button" class="btn btn-primary" onclick="imprimirPedido()">Imprimir</button>
-</div>
+                                    <div class="container">
+                                        <h2>Información del Pedido</h2>
+                                        <p id="mesa">Mesa: <?php echo $mesa; ?></p>
+                                        <p id="pedido"><?php echo $descripcion; ?></p>
+                                        <p id="total">Total: <?php echo $total; ?></p>
+                                        <!-- Agrega el botón "Imprimir" aquí -->
+                                        <?php
+                                        // Verificar si se enviaron precios de productos
+                                        if (isset($_POST['precios_productos'])) {
+                                            $precios_productos = json_decode($_POST['precios_productos']);
+                                            if ($precios_productos !== null) {
+                                                echo "<p id='precios_productos' style='display: none;'>" . implode(", ", $precios_productos) . "</p>";
+                                                // Agregamos un elemento oculto con los precios de productos para que se pueda acceder en el script de impresión
+                                            } else {
+                                                echo "<p>Error al decodificar los precios de productos.</p>";
+                                            }
+                                        }
+                                        ?>
+                                        <button type="button" class="btn btn-primary" onclick="imprimirPedido()">Imprimir</button>
+                                    </div>
                                     <?php
                                         $conn->close();
                                     }
@@ -84,15 +96,28 @@ $resultProductos = $conn->query($sqlProductos);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+
 function imprimirPedido() {
     // Obtener la fecha y hora actual
     var fechaHora = new Date();
     var fechaHoraFormato = fechaHora.toLocaleString();
 
     // Obtener el contenido del pedido
-    var mesa = document.getElementById('mesa').innerHTML;
     var descripcion = document.getElementById('pedido').innerHTML;
     var total = document.getElementById('total').innerHTML;
+
+    // Obtener los precios de productos
+    var preciosProductos = document.getElementById('precios_productos').innerHTML;
+    var preciosArray = preciosProductos.split(','); // Convertir la cadena de precios a un array
+
+    // Dividir la descripción por comas y crear una fila para cada elemento
+    var productos = descripcion.split(',');
+
+    // Log para verificar que los datos se están recuperando correctamente
+    console.log('Descripción:', descripcion);
+    console.log('Productos:', productos);
+    console.log('Precios de productos:', preciosArray);
+    console.log('Total:', total);
 
     // Crear una ventana emergente para imprimir el contenido del pedido con fecha y hora
     var popupWin = window.open('', '_blank', 'width=600,height=600');
@@ -110,7 +135,6 @@ function imprimirPedido() {
     popupWin.document.write('</style>');
 
     popupWin.document.write('</head><body>');
-    popupWin.document.write('<h2>Información del Pedido</h2>');
 
     // Crear una tabla responsiva para organizar la información
     popupWin.document.write('<div style="overflow-x:auto;">');
@@ -118,30 +142,25 @@ function imprimirPedido() {
 
     // Fila de encabezados de columna
     popupWin.document.write('<tr>');
-    popupWin.document.write('<th>Mesa</th>');
     popupWin.document.write('<th>Descripción</th>');
-    popupWin.document.write('<th>Total</th>');
+    popupWin.document.write('<th>Precio</th>');
     popupWin.document.write('</tr>');
 
-    // Fila con valores responsivos
-    popupWin.document.write('<tr>');
-    popupWin.document.write('<td>' + mesa + '</td>');
-
-    // Dividir la descripción por comas y crear una fila para cada elemento
-    var productos = descripcion.split(',');
-    popupWin.document.write('<td><ul>');
+    // Iterar sobre productos y precios para agregar filas a la tabla
     for (var i = 0; i < productos.length; i++) {
-        popupWin.document.write('<li>' + productos[i] + '</li>');
+        popupWin.document.write('<tr>');
+        popupWin.document.write('<td>' + productos[i] + '</td>');
+        popupWin.document.write('<td>' + preciosArray[i] + '</td>');
+        popupWin.document.write('</tr>');
     }
-    popupWin.document.write('</ul></td>');
-
-    popupWin.document.write('<td>' + total + '</td>');
-    popupWin.document.write('</tr>');
 
     popupWin.document.write('</table>');
     popupWin.document.write('</div>');
 
-    popupWin.document.write('<p>Fecha y Hora: ' + fechaHoraFormato + '</p>');
+    // Mostrar el total debajo de la tabla
+    popupWin.document.write('<p>' + total + '</p>');
+
+    popupWin.document.write('<h6>Fecha: ' + fechaHoraFormato + '</h6>');
     popupWin.document.write('</body></html>');
     popupWin.document.close();
 
@@ -149,8 +168,9 @@ function imprimirPedido() {
     popupWin.print();
     popupWin.close();
 }
-</script>
 
+
+</script>
 
 
 </body>
