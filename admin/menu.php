@@ -206,6 +206,13 @@ if (isset($_SESSION['nombre_usuario'])) {
     </a>
 </li>
 
+<li class="nav-item">
+    <a href="crud_entradas.php" class="nav-link">
+        <i class="fas fa-utensils nav-icon"></i>
+        <p>Editar Entradas</p>
+    </a>
+</li>
+
   </ul>
 </li>
 

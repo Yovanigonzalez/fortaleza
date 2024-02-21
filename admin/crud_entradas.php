@@ -32,7 +32,7 @@ if ($conn->connect_error) {
         }
     </style>
 
-    <title>Fortaleza | Crud</title>
+    <title>Fortaleza | CRUD</title>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -45,7 +45,7 @@ if ($conn->connect_error) {
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Crud</h3>
+                                    <h3 class="card-title">CRUD</h3>
                                 </div>
                                 <div class="card-body">
 
@@ -68,7 +68,7 @@ if ($conn->connect_error) {
                                             <select class="form-control" id="categoryFilter" name="categoryFilter">
                                                 <option value="">Todas las categorías</option>
                                                 <?php
-                                                $categoriesQuery = "SELECT DISTINCT categoria FROM producto";
+                                                $categoriesQuery = "SELECT DISTINCT categoria FROM entradas";
                                                 $categoriesResult = $conn->query($categoriesQuery);
 
                                                 while ($categoryRow = $categoriesResult->fetch_assoc()) {
@@ -84,7 +84,7 @@ if ($conn->connect_error) {
                                     <!-- Mostrar resultados filtrados -->
                                     <?php
                                     $categoryFilter = isset($_POST['categoryFilter']) ? $_POST['categoryFilter'] : '';
-                                    $query = "SELECT * FROM producto";
+                                    $query = "SELECT * FROM entradas";
 
                                     if (!empty($categoryFilter)) {
                                         $query .= " WHERE categoria = '$categoryFilter'";
@@ -97,10 +97,10 @@ if ($conn->connect_error) {
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th>Cantidad</th>
-                                                            <th>Descripción</th>
-                                                            <th>Precio</th>
+                                                            <th>ID</th>
                                                             <th>Categoría</th>
+                                                            <th>Producto</th>
+                                                            <th>Stock</th>
                                                             <th>Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -108,13 +108,13 @@ if ($conn->connect_error) {
 
                                         while ($row = $result->fetch_assoc()) {
                                             echo '<tr>
-                                                    <td>' . $row['cantidad'] . '</td>
-                                                    <td>' . $row['descripcion'] . '</td>
-                                                    <td>' . $row['precio'] . '</td>
+                                                    <td>' . $row['id'] . '</td>
                                                     <td>' . $row['categoria'] . '</td>
+                                                    <td>' . $row['producto'] . '</td>
+                                                    <td>' . $row['stock'] . '</td>
                                                     <td>
-                                                        <a href="editar_comida.php?id=' . $row['id'] . '" class="btn btn-warning">Editar</a>
-                                                         <a href="eliminar_comida.php?id=' . $row['id'] . '" class="btn btn-danger" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este registro?\')">Eliminar</a> 
+                                                        <a href="editar_entradas.php?id=' . $row['id'] . '" class="btn btn-warning">Editar</a>
+                                                        <!-- <a href="eliminar_entradas.php?id=' . $row['id'] . '" class="btn btn-danger" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este registro?\')">Eliminar</a>-->
                                                     </td>
                                                 </tr>';
                                         }

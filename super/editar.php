@@ -35,6 +35,10 @@
                                     die("Conexión fallida: " . $conn->connect_error);
                                 }
 
+                                // Inicializar variables
+                                $producto = "";
+                                $stock = "";
+
                                 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
                                     $producto_id = $_GET["id"];
 
@@ -77,7 +81,7 @@
 
                                     <div class="mb-3">
                                         <label for="stock" class="form-label">Cantidad disponible:</label>
-                                        <input type="number" name="stock" value="<?php echo $stock; ?>" class="form-control" required>
+                                        <input type="text" name="stock" value="<?php echo $stock; ?>" class="form-control" required>
                                     </div>
 
                                     <button type="submit" name="guardar" class="btn btn-primary">Guardar Cambios</button>
