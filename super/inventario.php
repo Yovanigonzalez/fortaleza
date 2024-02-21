@@ -11,8 +11,15 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM entradas";
 $result = $conn->query($sql);
 ?>
-
-<title>Inventario</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/exito.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Inventario</title>
+</head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <div class="content-wrapper">

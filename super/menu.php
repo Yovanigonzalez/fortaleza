@@ -171,6 +171,13 @@ if (isset($_SESSION['nombre_usuario'])) {
 </li>
 
 
+<li class="nav-item">
+    <a href="gastos.php" class="nav-link">
+        <i class="nav-icon fas fa-money-bill-wave"></i>
+        <p>Gastos</p>
+    </a>
+</li>
+
 
 
 </li>
