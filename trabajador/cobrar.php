@@ -59,11 +59,19 @@ $resultProductos = $conn->query($sqlProductos);
                                         $mesa = $_POST['mesa'];
                                     ?>
                                     <div class="container">
+                                            <!-- Agrega la etiqueta de la imagen con estilos -->
+                                        <img src="../svg/log.svg" alt="Descripción de la imagen" style="max-width: 100%; height: auto;">
+
                                         <h6 align="center">Información del Pedido</h6>
                                         <p id="mesa">Mesa: <?php echo $mesa; ?></p>
                                         <p id="folio">Venta:<?php echo $numero_folio; ?></p>
                                         <p id="pedido"><?php echo $descripcion; ?></p>
                                         <p id="total">Total: $ <?php echo $total; ?></p>
+
+                                        <img src="../svg/pagado.svg" alt="Descripción de la imagen" style="max-width: 100%; height: auto;">
+
+                                        <br><br><br>
+
                                         <!-- Agrega el botón "Imprimir" aquí -->
                                         <?php
                                         // Verificar si se enviaron precios de productos
@@ -78,7 +86,6 @@ $resultProductos = $conn->query($sqlProductos);
                                         }
                                         ?>
                                         <button type="button" class="btn btn-primary" onclick="imprimirPedido()">Imprimir</button>
-
                                     </div>
                                     <?php
                                         $conn->close();
@@ -135,7 +142,7 @@ function imprimirPedido() {
 
     // Agregar el encabezado con la imagen y la información adicional
     popupWin.document.write('<div>');
-    popupWin.document.write('<img src="../ico/logo.png" alt="Logo" />');
+    popupWin.document.write('<img src="../svg/log.svg" alt="Logo" />');
     popupWin.document.write('<p><strong>Ubicanos en:</strong> Calle Dr Manuel Pereyra Mejía 433, Ignacio Zaragoza, 75770 Tehuacán, Pue</p>');
     popupWin.document.write('<p align="center"><strong>Teléfono:</strong> 238 127 4286</p>');
     popupWin.document.write('<p align="center"><strong>WhatsApp:</strong> 238 289 7997</p>');
@@ -169,6 +176,9 @@ function imprimirPedido() {
 
     // Mostrar el total debajo de la tabla
     popupWin.document.write('<p>' + total + '</p>');
+
+    popupWin.document.write('<img src="../svg/pagado.svg" alt="Pagado" />');
+
 
     popupWin.document.write('</body></html>');
     popupWin.document.close();

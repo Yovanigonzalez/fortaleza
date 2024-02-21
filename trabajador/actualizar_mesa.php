@@ -1,18 +1,17 @@
 <?php
 include '../config/conexion.php';
 
-// Verificar si se envían datos mediante el método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recuperar datos del formulario POST
-    $mesa = $_POST['mesa'];
+    // Obtener el id de la mesa de manera segura
+    $idMesa = mysqli_real_escape_string($conn, $_POST['idMesa']);
 
-    // Realizar la actualización en la base de datos
-    $sqlActualizarMesa = "UPDATE mesa SET estatus = 'desocupada' WHERE numero_mesa = '$mesa'";
-
+    // Actualizar el estatus de la mesa a 'desocupada'
+    $sqlActualizarMesa = "UPDATE `mesa` SET `estatus` = 'desocupada' WHERE `id` = '$idMesa'";
+    
     if ($conn->query($sqlActualizarMesa) === TRUE) {
-        echo "Actualización exitosa";
+        echo 'success';
     } else {
-        echo "Error al actualizar la mesa: " . $conn->error;
+        echo 'error: ' . $conn->error;
     }
 
     $conn->close();

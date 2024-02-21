@@ -65,7 +65,7 @@ $resultMesas = $conn->query($sqlMesas);
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Punto de Venta</h3>
+                                    <h3 class="card-title">Restaurante</h3>
                                 </div>
                                 <div class="card-body">
                                     <!-- Código del punto de venta -->

@@ -19,7 +19,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Punto de Venta</title>
+    <title>Fortaleza | Agregar mas</title>
     <link rel="shortcut icon" type="image/x-icon" href="../log/log.png">
 
     <style>
