@@ -498,7 +498,8 @@ function imprimirTicket() {
     var popupWin = window.open('', '_blank', 'width=600,height=600');
     popupWin.document.open();
     popupWin.document.write('<html><head><title>Ticket de Compra</title>');
-    
+    ticketContent += '<img id="imagenTicket" src="../svg/pagado.svg" alt="Imagen del ticket" style="display: block; margin: 0 auto; width: 180px; height: auto; margin-top: 10px;">';
+
     // Estilos de tabla
     popupWin.document.write('<style>table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }');
     popupWin.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }</style>');

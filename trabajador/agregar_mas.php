@@ -171,28 +171,66 @@ $resultProductos = $conn->query($sqlProductos);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-    var carrito = []; // Variable global para almacenar productos en el carrito
+        var carrito = [];
 
-    function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
-        var producto = {
-            id: id,
-            descripcion: descripcion,
-            precio: precio,
-            cantidad: cantidad,
-            categoria: categoria
-        };
+        function agregarAlCarrito(id, descripcion, precio, cantidad, categoria) {
+            var producto = {
+                id: id,
+                descripcion: descripcion,
+                precio: precio,
+                cantidad: cantidad,
+                categoria: categoria
+            };
 
-        carrito.push(producto);
-        actualizarInterfazCarrito(); // Llama a la función para actualizar la interfaz del carrito
-        console.log("Producto agregado al carrito:", producto);
+            carrito.push(producto);
+            actualizarInterfazCarrito(); // Llama a la función para actualizar la interfaz del carrito
+            console.log("Producto agregado al carrito:", producto);
 
-        // Limpia el campo de búsqueda
-        document.getElementById("searchProductos").value = "";
+            // Limpia el campo de búsqueda
+            document.getElementById("searchProductos").value = "";
 
-        // Oculta la lista de productos
-        document.getElementById("productosList").style.display = "none";
-    }
-</script>
+            // Oculta la lista de productos
+            document.getElementById("productosList").style.display = "none";
+
+            // Realiza la actualización del stock en la base de datos
+            actualizarStockEnBaseDeDatos(categoria, cantidad)
+                .then(() => {
+                    // El stock se ha actualizado correctamente en la base de datos.
+                    console.log('Stock actualizado correctamente en la base de datos.');
+                })
+                .catch((error) => {
+                    // Hubo un error al actualizar el stock en la base de datos.
+                    // Puedes manejar el error aquí.
+                    console.error('Error al actualizar el stock en la base de datos: ' + error.message);
+                });
+        }
+
+        function actualizarStockEnBaseDeDatos(categoria, cantidad) {
+            return new Promise((resolve, reject) => {
+                // Realiza una llamada AJAX o una solicitud HTTP a tu servidor
+                // para actualizar el stock en la base de datos.
+
+                // Por ejemplo, puedes usar jQuery para realizar una solicitud POST.
+                $.ajax({
+                    url: 'actualizar_stock.php', // URL de tu script PHP para actualizar el stock
+                    method: 'POST',
+                    data: {
+                        categoria: categoria,
+                        cantidad: cantidad
+                    },
+                    success: function (response) {
+                        // El stock se ha actualizado correctamente en la base de datos.
+                        resolve(response);
+                    },
+                    error: function (error) {
+                        // Hubo un error al actualizar el stock en la base de datos.
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+    </script>
 
 
 <script>

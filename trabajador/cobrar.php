@@ -59,10 +59,10 @@ $resultProductos = $conn->query($sqlProductos);
                                         $mesa = $_POST['mesa'];
                                     ?>
                                     <div class="container">
-                                        <h2>Información del Pedido</h2>
+                                        <h6 align="center">Información del Pedido</h6>
                                         <p id="mesa">Mesa: <?php echo $mesa; ?></p>
                                         <p id="pedido"><?php echo $descripcion; ?></p>
-                                        <p id="total">Total: <?php echo $total; ?></p>
+                                        <p id="total">Total: $ <?php echo $total; ?></p>
                                         <!-- Agrega el botón "Imprimir" aquí -->
                                         <?php
                                         // Verificar si se enviaron precios de productos
@@ -96,7 +96,6 @@ $resultProductos = $conn->query($sqlProductos);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-
 function imprimirPedido() {
     // Obtener la fecha y hora actual
     var fechaHora = new Date();
@@ -113,12 +112,6 @@ function imprimirPedido() {
     // Dividir la descripción por comas y crear una fila para cada elemento
     var productos = descripcion.split(',');
 
-    // Log para verificar que los datos se están recuperando correctamente
-    console.log('Descripción:', descripcion);
-    console.log('Productos:', productos);
-    console.log('Precios de productos:', preciosArray);
-    console.log('Total:', total);
-
     // Crear una ventana emergente para imprimir el contenido del pedido con fecha y hora
     var popupWin = window.open('', '_blank', 'width=600,height=600');
     popupWin.document.open();
@@ -126,15 +119,29 @@ function imprimirPedido() {
 
     // Estilos de la ventana de impresión
     popupWin.document.write('<style>');
-    popupWin.document.write('body { font-family: Arial, sans-serif; }');
-    popupWin.document.write('table { width: 100%; border-collapse: collapse; }');
-    popupWin.document.write('th, td { border: 1px solid #dddddd; text-align: left; padding: 4px; font-size: 10px; }');
+    popupWin.document.write('body { font-family: Arial, sans-serif; font-size: 14px; color: #000; }');
+    popupWin.document.write('table { width: 100%; border-collapse: collapse; margin-top: 10px; }');
+    popupWin.document.write('th, td { border: 1px solid #dddddd; text-align: left; padding: 4px; font-size: 14px; font-family: Arial, sans-serif; }');
     popupWin.document.write('th { background-color: #f2f2f2; }');
     popupWin.document.write('ul { list-style-type: none; padding: 0; margin: 0; }');
-    popupWin.document.write('li { margin-bottom: 2px; font-size: 10px; }');
+    popupWin.document.write('li { margin-bottom: 2px; font-size: 14px; }');
+    popupWin.document.write('h6 { font-size: 14px; }');
+    popupWin.document.write('img { display: block; margin: 0 auto; width: 180px; height: auto; margin-top: 10px; }');
     popupWin.document.write('</style>');
 
     popupWin.document.write('</head><body>');
+
+    // Agregar el encabezado con la imagen y la información adicional
+    popupWin.document.write('<div>');
+    popupWin.document.write('<img src="../ico/logo.png" alt="Logo" />');
+    popupWin.document.write('<p><strong>Ubicanos en:</strong> Calle Dr Manuel Pereyra Mejía 433, Ignacio Zaragoza, 75770 Tehuacán, Pue</p>');
+    popupWin.document.write('<p align="center"><strong>Teléfono:</strong> 238 127 4286</p>');
+    popupWin.document.write('<p align="center"><strong>WhatsApp:</strong> 238 289 7997</p>');
+    popupWin.document.write('<p align="center"><strong>Número de venta:</strong> NÚMERO_VENTA_AQUÍ</p>');
+    popupWin.document.write('<p align="center"><strong>Fecha:</strong> <br> ' + fechaHoraFormato + '</p>');
+    popupWin.document.write('<br>');
+    popupWin.document.write('</div>');
+    popupWin.document.write('<p align="center"><strong>Detalles de su compra:</strong></p>');
 
     // Crear una tabla responsiva para organizar la información
     popupWin.document.write('<div style="overflow-x:auto;">');
@@ -160,7 +167,6 @@ function imprimirPedido() {
     // Mostrar el total debajo de la tabla
     popupWin.document.write('<p>' + total + '</p>');
 
-    popupWin.document.write('<h6>Fecha: ' + fechaHoraFormato + '</h6>');
     popupWin.document.write('</body></html>');
     popupWin.document.close();
 
@@ -168,9 +174,9 @@ function imprimirPedido() {
     popupWin.print();
     popupWin.close();
 }
-
-
 </script>
+
+
 
 
 </body>
