@@ -66,7 +66,7 @@ include '../config/conexion.php';
     function imprimirGanancia() {
         var ganancia = "<?php echo $ganancia; ?>";
         // Crear una ventana emergente con solo el valor de la ganancia
-        var printWindow = window.open('', '', 'width=300,height=200');
+        var printWindow = window.open('', '', 'width=600,height=600');
         printWindow.document.write('<html><head><title>Ganancia</title></head><body>');
         printWindow.document.write('<p>Ganancia: ' + ganancia + '</p>');
         printWindow.document.write('</body></html>');

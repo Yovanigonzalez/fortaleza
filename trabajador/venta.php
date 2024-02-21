@@ -191,7 +191,10 @@ function ventas() {
     var descripcion = obtenerDescripcionVenta();
     var total = obtenerTotalVenta();
     var fechaHora = obtenerFechaHoraActual();
-    var numeroFolio = obtenerNumeroFolio(); // Nueva función para obtener el número de folio
+    var numeroFolio = obtenerNumeroFolio(); // Asegúrate de tener esta función definida
+
+    // Datos adicionales como preciosProductos
+    var preciosProductos = obtenerPreciosProductos();
 
     // Realizar una solicitud AJAX para guardar los datos de ventas en la base de datos
     $.ajax({
@@ -201,7 +204,8 @@ function ventas() {
             descripcion: descripcion,
             total: total,
             fechaHora: fechaHora,
-            numeroFolio: numeroFolio // Agregar el número de folio a los datos
+            numeroFolio: numeroFolio,
+            preciosProductos: preciosProductos // Agregar preciosProductos a los datos
         },
         success: function(response) {
             // Los datos de ventas se han registrado con éxito
@@ -213,6 +217,20 @@ function ventas() {
         }
     });
 }
+
+function obtenerPreciosProductos() {
+    var precios = [];
+    var carritoItems = document.getElementById('carrito').getElementsByTagName('li');
+
+    for (var i = 0; i < carritoItems.length; i++) {
+        var itemText = carritoItems[i].textContent;
+        var precio = parseFloat(itemText.split(' - Precio: $')[1]);
+        precios.push(precio);
+    }
+
+    return precios;
+}
+
 
 // Nueva función para obtener el número de folio
 function obtenerNumeroFolio() {

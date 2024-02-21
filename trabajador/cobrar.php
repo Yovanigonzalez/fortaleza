@@ -61,6 +61,7 @@ $resultProductos = $conn->query($sqlProductos);
                                     <div class="container">
                                         <h6 align="center">Información del Pedido</h6>
                                         <p id="mesa">Mesa: <?php echo $mesa; ?></p>
+                                        <p id="folio">Venta:<?php echo $numero_folio; ?></p>
                                         <p id="pedido"><?php echo $descripcion; ?></p>
                                         <p id="total">Total: $ <?php echo $total; ?></p>
                                         <!-- Agrega el botón "Imprimir" aquí -->
@@ -77,6 +78,7 @@ $resultProductos = $conn->query($sqlProductos);
                                         }
                                         ?>
                                         <button type="button" class="btn btn-primary" onclick="imprimirPedido()">Imprimir</button>
+
                                     </div>
                                     <?php
                                         $conn->close();
@@ -137,7 +139,8 @@ function imprimirPedido() {
     popupWin.document.write('<p><strong>Ubicanos en:</strong> Calle Dr Manuel Pereyra Mejía 433, Ignacio Zaragoza, 75770 Tehuacán, Pue</p>');
     popupWin.document.write('<p align="center"><strong>Teléfono:</strong> 238 127 4286</p>');
     popupWin.document.write('<p align="center"><strong>WhatsApp:</strong> 238 289 7997</p>');
-    popupWin.document.write('<p align="center"><strong>Número de venta:</strong> NÚMERO_VENTA_AQUÍ</p>');
+    popupWin.document.write('<p align="center"><strong>Número de venta:</strong> ' + document.getElementById('folio').textContent + '</p>');
+    popupWin.document.write('<p align="center"><strong>Mesa:</strong> ' + document.getElementById('mesa').textContent + '</p>');
     popupWin.document.write('<p align="center"><strong>Fecha:</strong> <br> ' + fechaHoraFormato + '</p>');
     popupWin.document.write('<br>');
     popupWin.document.write('</div>');

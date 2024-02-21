@@ -80,7 +80,7 @@ $result = $conn->query($sql);
                                         <input type="hidden" name="fecha_hora" value="<?php echo $fecha_hora; ?>">
                                         <input type="hidden" name="mesa" value="<?php echo $mesa; ?>">
                                            <!-- Agrega los precios como un campo oculto -->
-    <input type="hidden" name="precios_productos" value="<?php echo htmlspecialchars($precios_productos); ?>">
+                                        <input type="hidden" name="precios_productos" value="<?php echo htmlspecialchars($precios_productos); ?>">
                                         <button type="submit" class="btn btn-primary">Cobrar Mesa</button>
                                     </form>
 

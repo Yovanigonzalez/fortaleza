@@ -19,7 +19,8 @@ $numeroFolio = $_POST['numeroFolio'];
 // Obtener los datos de la venta de la solicitud POST
 $descripcion = $_POST['descripcion'];
 $total = $_POST['total'];
-$mesa = $_POST['mesa']; // Variable para la mesa seleccionada
+// Obtener la mesa de la solicitud POST o establecerla en '0' si no se proporciona
+$mesa = isset($_POST['mesa']) ? $_POST['mesa'] : '0';
 $preciosProductos = $_POST['preciosProductos']; // Precios individuales de los productos
 
 // Convertir el array de precios a formato JSON para almacenar en la base de datos
