@@ -86,6 +86,30 @@ $resultProductos = $conn->query($sqlProductos);
                                         }
                                         ?>
                                         <button type="button" class="btn btn-primary" onclick="imprimirPedido()">Imprimir</button>
+
+                                        <!-- Botón "Mesa Cobrada" -->
+                                        <button type="button" class="btn btn-success" onclick="marcarMesaCobrada(<?php echo $mesa; ?>)">Mesa Cobrada</button>
+
+                                        <script>
+                                            function marcarMesaCobrada(idMesa) {
+                                                // Hacer una solicitud AJAX para actualizar el estado de la mesa en la base de datos
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "actualizar_mesa.php", // Nombre del archivo PHP que manejará la actualización
+                                                    data: { idMesa: idMesa },
+                                                    success: function(response) {
+                                                        // Manejar la respuesta (puede ser un mensaje de éxito o manejar errores si es necesario)
+                                                        console.log(response);
+                                                        alert("Mesa marcada como cobrada con éxito.");
+                                                        // Puedes redirigir al usuario o hacer otras acciones después de la actualización
+                                                    },
+                                                    error: function(error) {
+                                                        console.error("Error al actualizar mesa: " + error.responseText);
+                                                    }
+                                                });
+                                            }
+                                        </script>
+
                                     </div>
                                     <?php
                                         $conn->close();

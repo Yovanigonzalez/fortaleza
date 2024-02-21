@@ -1,5 +1,14 @@
-<?php include 'menu.php' ?>
+<?php
+include '../config/conexion.php';
 
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+?>
+
+<?php include 'menu.php'; ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -16,9 +25,15 @@
         .producto-item {
             margin-bottom: 1.0rem;
         }
+
+        /* Estilo para ajustar el tamaño de la imagen */
+        .imagen-producto {
+            max-width: 100px; /* Ajusta el ancho máximo según tus necesidades */
+            max-height: 100px; /* Ajusta el alto máximo según tus necesidades */
+        }
     </style>
 
-    <title>Punto de Venta</title>
+    <title>Fortaleza | Crud</title>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -27,52 +42,104 @@
                 <br>
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- Columna del Punto de Venta -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Punto de Venta</h3>
+                                    <h3 class="card-title">Crud</h3>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Código del punto de venta -->
-                                    <section>
-                                        <h2>Productos</h2>
-                                        <!-- Campo de búsqueda para productos de la tabla 'productos' -->
-                                        <input type="text" id="searchProductos" class="form-control" onkeyup="searchProductos()" placeholder="Buscar productos...">
-                                        <!-- Lista de productos de la tabla 'productos' (inicialmente oculta) -->
-                                        <br>
-                                        <ul id="productosList" style="display: none;">
-                                            <?php
-                                            if ($resultProductos->num_rows > 0) {
-                                                while ($rowProductos = $resultProductos->fetch_assoc()) {
-                                                    echo '<li class="producto-item">' . $rowProductos['descripcion'] . ' <button class="btn btn-sm btn-primary" onclick="agregarAlCarrito(' . $rowProductos['id'] . ', \'' . $rowProductos['descripcion'] . '\', ' . $rowProductos['precio'] . ', \'' . $rowProductos['cantidad'] . '\', \'' . $rowProductos['categoria'] . '\')">Agregar</button></li>';
+
+                                    <!-- Filter by Category -->
+                                    <form method="post">
+                                        <div class="form-group">
+                                        <?php
+                                        // Display success message if set
+                                        if (isset($_SESSION['success_message'])) {
+                                            echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
+                                            unset($_SESSION['success_message']); // Clear the message to avoid displaying it on page refresh
+                                        }
+
+                                        // Display error message if set
+                                        if (isset($_SESSION['error_message'])) {
+                                            echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
+                                            unset($_SESSION['error_message']); // Clear the message to avoid displaying it on page refresh
+                                        }
+                                        ?>
+                                        
+                                            <label for="categoryFilter">Filtrar por Categoría:</label>
+                                            <select class="form-control" id="categoryFilter" name="categoryFilter">
+                                                <option value="">Todas las categorías</option>
+                                                <?php
+                                                // Consulta para obtener las categorías desde la base de datos
+                                                $categoriesQuery = "SELECT DISTINCT categoria FROM menu";
+                                                $categoriesResult = $conn->query($categoriesQuery);
+
+                                                // Mostrar las categorías en el dropdown
+                                                while ($categoryRow = $categoriesResult->fetch_assoc()) {
+                                                    echo '<option value="' . $categoryRow['categoria'] . '">' . $categoryRow['categoria'] . '</option>';
                                                 }
-                                            } else {
-                                                echo "No se encontraron productos en la tabla 'productos'.";
-                                            }
-                                            ?>
-                                        </ul>
-                                    </section>
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Buscar</button>
+                                    </form>
 
+                                    <!-- Display filtered results -->
+                                    <?php
+                                    // Consulta a la base de datos con filtro por categoría
+                                    $categoryFilter = isset($_POST['categoryFilter']) ? $_POST['categoryFilter'] : '';
+                                    $query = "SELECT * FROM menu";
+
+                                    // Apply category filter if selected
+                                    if (!empty($categoryFilter)) {
+                                        $query .= " WHERE categoria = '$categoryFilter'";
+                                    }
+
+                                    $result = $conn->query($query);
+
+                                    if ($result->num_rows > 0) {
+                                        // Mostrar la tabla con los datos de la base de datos
+                                        echo '<table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subtítulo</th>
+                                                        <th>Descripción</th>
+                                                        <th>Precio 1</th>
+                                                        <th>Precio 2</th>
+                                                        <th>Precio 3</th>
+                                                        <th>Categoría</th>
+                                                        <th>Estatus</th>
+                                                        <th>Imagen</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>';
+                                        
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo '<tr>
+                                                    <td>' . $row['subtitulo'] . '</td>
+                                                    <td>' . $row['descripcion'] . '</td>
+                                                    <td>' . $row['precio1'] . '</td>
+                                                    <td>' . $row['precio2'] . '</td>
+                                                    <td>' . $row['precio3'] . '</td>
+                                                    <td>' . $row['categoria'] . '</td>
+                                                    <td>' . $row['estatus'] . '</td>
+                                                    <td><img class="imagen-producto" src="../view/' . $row['imagen'] . '" alt="Imagen"></td>
+                                                    <td>
+                                                        <a href="editar_menu.php?id=' . $row['id'] . '" class="btn btn-warning">Editar</a>
+                                                        <a href="eliminar_menu.php?id=' . $row['id'] . '" class="btn btn-danger" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este registro?\')">Eliminar</a>
+                                                        </td>
+                                                </tr>';
+                                        }
+                                        echo '</tbody></table>';
+                                    } else {
+                                        echo "No hay registros en la base de datos.";
+                                    }
+                                    ?>
 
                                 </div>
                             </div>
                         </div>
-                        <!-- Columna del Ticket de Compra -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Ticket de Compra</h3>
-                                </div>
-
-                                <div class="card-body">
-                                    <!-- Contenido del ticket de compra -->
-                                    <pre id="ticketContent"></pre>
-
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </section>
@@ -83,6 +150,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!-- Agrega este script al final de tu página HTML, antes de cerrar el body -->
+    <!-- Agrega este script al final de tu página HTML, antes de cerrar el body -->
 </body>
 </html>
+
+<?php
+// Cerrar la conexión
+$conn->close();
+?>

@@ -192,7 +192,7 @@ if (isset($_SESSION['nombre_usuario'])) {
     </li>
 
     <li class="nav-item">
-    <a href="#" class="nav-link">
+    <a href="crud_comida.php" class="nav-link">
         <i class="fas fa-tasks nav-icon"></i>
         <p>Acciones (comida)</p>
     </a>

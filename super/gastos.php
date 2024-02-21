@@ -7,7 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/exito.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Inventario</title>
+    <title>Fortaleza | Gastos</title>
+
+    <style>
+        .alert-success {
+    --bs-alert-color: var(--bs-success-text-emphasis);
+    --bs-alert-bg: var(--bs-success-bg-subtle);
+    /* Agrega cualquier otra propiedad de estilo que desees */
+}
+
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -23,8 +32,16 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Inventario</h3>
+                                    <h3 class="card-title">Gastos</h3>
                                 </div>
+                                <?php
+                                if(isset($_GET['exito']) && $_GET['exito'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">';
+                                    echo "¡Registro de gasto exitoso!";
+                                    echo '</div>';
+                                }
+                                ?>
+
                                 <div class="card-body">
                                     <!-- Formulario de Registro de Gastos con estilos de Bootstrap -->
                                     <form action="procesar_gasto.php" method="post">
