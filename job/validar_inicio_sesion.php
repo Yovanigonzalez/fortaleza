@@ -27,13 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirigir según el rol
             if ($row['rol'] === 'admin') {
-                header("Location: ../admin/inicio.php");
+                header("Location: ../admin/a_usuario.php");
                 exit();
             } elseif ($row['rol'] === 'job') {
                 header("Location: ../trabajador/venta.php");
                 exit();
             } elseif ($row['rol'] === 'super') {
-                header("Location: ../super/inicio.php");
+                header("Location: ../super/gastos.php");
                 exit();
             } else {
                 header("Location: error.php");

@@ -214,7 +214,7 @@ if (isset($_SESSION['nombre_usuario'])) {
 <li class="nav-item">
     <a href="mesa.php" class="nav-link">
         <i class="nav-icon fas fa-table"></i>
-        <p>Agregar mesa</p>
+        <p>Agregar mesas</p>
     </a>
 </li>
 

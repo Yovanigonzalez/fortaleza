@@ -49,23 +49,23 @@ if ($conn->connect_error) {
                                 </div>
                                 <div class="card-body">
 
-                                    <!-- Filter by Category -->
+                                    <!-- Filtrar por Categoría -->
                                     <form method="post">
                                         <div class="form-group">
-                                        <?php
-                                        // Display success message if set
-                                        if (isset($_SESSION['success_message'])) {
-                                            echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
-                                            unset($_SESSION['success_message']); // Clear the message to avoid displaying it on page refresh
-                                        }
+                                            <?php
+                                            // Mostrar mensaje de éxito si está establecido
+                                            if (isset($_SESSION['success_message'])) {
+                                                echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
+                                                unset($_SESSION['success_message']); // Limpiar el mensaje para evitar mostrarlo al recargar la página
+                                            }
 
-                                        // Display error message if set
-                                        if (isset($_SESSION['error_message'])) {
-                                            echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
-                                            unset($_SESSION['error_message']); // Clear the message to avoid displaying it on page refresh
-                                        }
-                                        ?>
-                                        
+                                            // Mostrar mensaje de error si está establecido
+                                            if (isset($_SESSION['error_message'])) {
+                                                echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
+                                                unset($_SESSION['error_message']); // Limpiar el mensaje para evitar mostrarlo al recargar la página
+                                            }
+                                            ?>
+
                                             <label for="categoryFilter">Filtrar por Categoría:</label>
                                             <select class="form-control" id="categoryFilter" name="categoryFilter">
                                                 <option value="">Todas las categorías</option>
@@ -84,13 +84,13 @@ if ($conn->connect_error) {
                                         <button type="submit" class="btn btn-primary">Buscar</button>
                                     </form>
 
-                                    <!-- Display filtered results -->
+                                    <!-- Mostrar resultados filtrados -->
                                     <?php
                                     // Consulta a la base de datos con filtro por categoría
                                     $categoryFilter = isset($_POST['categoryFilter']) ? $_POST['categoryFilter'] : '';
                                     $query = "SELECT * FROM menu";
 
-                                    // Apply category filter if selected
+                                    // Aplicar filtro de categoría si está seleccionado
                                     if (!empty($categoryFilter)) {
                                         $query .= " WHERE categoria = '$categoryFilter'";
                                     }
@@ -99,22 +99,23 @@ if ($conn->connect_error) {
 
                                     if ($result->num_rows > 0) {
                                         // Mostrar la tabla con los datos de la base de datos
-                                        echo '<table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Subtítulo</th>
-                                                        <th>Descripción</th>
-                                                        <th>Precio 1</th>
-                                                        <th>Precio 2</th>
-                                                        <th>Precio 3</th>
-                                                        <th>Categoría</th>
-                                                        <th>Estatus</th>
-                                                        <th>Imagen</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>';
-                                        
+                                        echo '<div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Subtítulo</th>
+                                                            <th>Descripción</th>
+                                                            <th>Precio 1</th>
+                                                            <th>Precio 2</th>
+                                                            <th>Precio 3</th>
+                                                            <th>Categoría</th>
+                                                            <th>Estatus</th>
+                                                            <th>Imagen</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>';
+
                                         while ($row = $result->fetch_assoc()) {
                                             echo '<tr>
                                                     <td>' . $row['subtitulo'] . '</td>
@@ -128,10 +129,10 @@ if ($conn->connect_error) {
                                                     <td>
                                                         <a href="editar_menu.php?id=' . $row['id'] . '" class="btn btn-warning">Editar</a>
                                                         <a href="eliminar_menu.php?id=' . $row['id'] . '" class="btn btn-danger" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este registro?\')">Eliminar</a>
-                                                        </td>
+                                                    </td>
                                                 </tr>';
                                         }
-                                        echo '</tbody></table>';
+                                        echo '</tbody></table></div>';
                                     } else {
                                         echo "No hay registros en la base de datos.";
                                     }

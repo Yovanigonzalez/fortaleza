@@ -1,56 +1,3 @@
-<?php
-// Establecer conexión a la base de datos
-
-include '../config/conexion.php';
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-// Obtener el ID del elemento a editar desde la URL
-if(isset($_GET['id']) && !empty($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Consulta a la base de datos para obtener los detalles del elemento a editar
-    $query = "SELECT * FROM menu WHERE id = $id";
-    $result = $conn->query($query);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        // Aquí puedes mostrar un formulario prellenado con los detalles actuales y permitir la edición
-    } else {
-        echo "Elemento no encontrado.";
-    }
-} else {
-    echo "ID no proporcionado.";
-}
-
-// Verificar si se ha enviado el formulario de edición
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los datos del formulario
-    $nuevoSubtitulo = $_POST['nuevoSubtitulo'];
-    $nuevaDescripcion = $_POST['nuevaDescripcion'];
-    $nuevoPrecio1 = $_POST['nuevoPrecio1'];
-    $nuevoPrecio2 = $_POST['nuevoPrecio2'];
-    $nuevoPrecio3 = $_POST['nuevoPrecio3'];
-    $nuevaCategoria = $_POST['nuevaCategoria'];
-    $nuevoEstatus = $_POST['nuevoEstatus'];
-
-    // Actualizar la base de datos con los nuevos datos
-    $updateQuery = "UPDATE menu SET subtitulo = '$nuevoSubtitulo', descripcion = '$nuevaDescripcion', precio1 = '$nuevoPrecio1', precio2 = '$nuevoPrecio2', precio3 = '$nuevoPrecio3', categoria = '$nuevaCategoria', estatus = '$nuevoEstatus' WHERE id = $id";
-
-    if ($conn->query($updateQuery) === TRUE) {
-        echo "Registro actualizado correctamente.";
-    } else {
-        echo "Error al actualizar el registro: " . $conn->error;
-    }
-}
-
-// Cerrar la conexión
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -84,43 +31,7 @@ $conn->close();
                     <div class="card-body">
 
 
-                    <h2>Editar Elemento</h2>
-        
-        <!-- Formulario para editar -->
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $id; ?>">
-            <div class="form-group">
-                <label for="nuevoSubtitulo">Nuevo Subtítulo:</label>
-                <input type="text" class="form-control" id="nuevoSubtitulo" name="nuevoSubtitulo" value="<?php echo $row['subtitulo']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="nuevaDescripcion">Nueva Descripción:</label>
-                <textarea class="form-control" id="nuevaDescripcion" name="nuevaDescripcion"><?php echo $row['descripcion']; ?></textarea>
-            </div>
-            <div class="form-group">
-                <label for="nuevoPrecio1">Nuevo Precio 1:</label>
-                <input type="text" class="form-control" id="nuevoPrecio1" name="nuevoPrecio1" value="<?php echo $row['precio1']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="nuevoPrecio2">Nuevo Precio 2:</label>
-                <input type="text" class="form-control" id="nuevoPrecio2" name="nuevoPrecio2" value="<?php echo $row['precio2']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="nuevoPrecio3">Nuevo Precio 3:</label>
-                <input type="text" class="form-control" id="nuevoPrecio3" name="nuevoPrecio3" value="<?php echo $row['precio3']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="nuevaCategoria">Nueva Categoría:</label>
-                <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" value="<?php echo $row['categoria']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="nuevoEstatus">Nuevo Estatus:</label>
-                <input type="text" class="form-control" id="nuevoEstatus" name="nuevoEstatus" value="<?php echo $row['estatus']; ?>">
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        </form>
-    </div>
-
-
+                    
 
                     </div>
                 </div>
