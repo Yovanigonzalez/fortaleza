@@ -107,7 +107,7 @@ $conn->close();
                                         </div>
                                         <div class="form-group">
                                             <label for="stock">Stock:</label>
-                                            <input type="number" class="form-control" id="stock" name="stock" value="<?php echo $fila['stock']; ?>" required>
+                                            <input type="text" class="form-control" id="stock" name="stock" value="<?php echo $fila['stock']; ?>" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Actualizar Entrada</button>
                                     </form>
