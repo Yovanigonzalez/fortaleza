@@ -52,6 +52,12 @@
   </div>
 
   <div class="cuadro">
+  <img class="imagen" src="../food/pollo.jpg">
+    <p>Pollos Especiales</p>
+    <a href="pollo.php" class="comprar-btn">¡Ordénalo ahora!</a>
+  </div>
+
+  <div class="cuadro">
   <img class="imagen" src="../food/pollo combo.jpeg">
     <p>Pollos Combos</p>
     <a href="pollos_combos.php" class="comprar-btn">¡Ordénalo ahora!</a>
