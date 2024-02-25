@@ -78,6 +78,7 @@
                                 <label for="categoria">Categoría:</label>
                                 <select class="form-control" id="categoria" name="categoria">
                                     <option value="Pollo">Pollo</option>
+                                    <option value="Pollo Especial">Pollo Especial</option>
                                     <option value="Pollo Combos">Pollos Combos</option>
                                     <option value="Alitas">Alitas</option>
                                     <option value="Tenders">Tenders</option>

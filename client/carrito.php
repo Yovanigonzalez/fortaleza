@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+include 'menu.php';
 
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = array();
@@ -7,20 +8,20 @@ if (!isset($_SESSION['carrito'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'agregar') {
-        agregarAlCarrito($_POST['titulo'], $_POST['precio']);
+        agregarAlCarrito($_POST['id'], $_POST['titulo'], $_POST['precio'], $_POST['descripcion'], $_POST['subtitulo']);
+        echo '¡Éxito! Fue agregado a su carrito.';
     } elseif ($_POST['action'] === 'limpiar') {
         limpiarCarrito();
     }
 }
 
-function agregarAlCarrito($titulo, $precio) {
-    $_SESSION['carrito'][] = array('titulo' => $titulo, 'precio' => $precio);
+function agregarAlCarrito($id, $titulo, $precio, $descripcion, $subtitulo) {
+    $_SESSION['carrito'][] = array('id' => $id, 'titulo' => $titulo, 'precio' => $precio, 'descripcion' => $descripcion, 'subtitulo' => $subtitulo);
 }
 
 function limpiarCarrito() {
     $_SESSION['carrito'] = array();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,17 +29,18 @@ function limpiarCarrito() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
+
 </head>
 <body>
 
-    <h2>Carrito de Compras</h2>
+    <h2 align="center">Carrito de Compras</h2>
 
     <?php
     if (!empty($_SESSION['carrito'])) {
         echo "<ul>";
         $totalCarrito = 0;
         foreach ($_SESSION['carrito'] as $producto) {
-            echo "<li>{$producto['titulo']} - $ {$producto['precio']}</li>";
+            echo "<li> Producto: {$producto['subtitulo']} - Descripción: {$producto['descripcion']} - Precio: $ {$producto['precio']}</li>";
             $totalCarrito += $producto['precio'];
         }
         echo "</ul>";

@@ -14,7 +14,7 @@
         <?php
         include '../config/conexion.php';
 
-        $categoria = "Guarniciones";
+        $categoria = "Pollo Especial";
         $sql = "SELECT id, titulo, subtitulo, descripcion, precio1, categoria, estatus, imagen FROM menu WHERE categoria = '$categoria' AND estatus <> 'agotado'";
         $result = $conn->query($sql);
 
